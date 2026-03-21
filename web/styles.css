@@ -8,6 +8,7 @@
   --bg-dark: #000;
   --bg-grey: #808080;
   --bg-white: #fff;
+  --bg-blue-grey: #5a6a7a;
   --header-bg: #404040;
   --grid-line: #282828;
   --text-white: #fff;
@@ -40,7 +41,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: var(--header-bg);
+  background: var(--bg-blue-grey);
   min-height: 48px;
   cursor: pointer;
 }
@@ -84,7 +85,7 @@ html, body {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr) auto;
   gap: 1px;
   background: var(--grid-line);
   padding: 1px;
@@ -312,6 +313,40 @@ html, body {
 .slot-selected {
   outline: 3px solid var(--highlight);
   outline-offset: -3px;
+}
+
+/* Scoreboard */
+.scoreboard-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-blue-grey);
+}
+
+.scoreboard-cell.skyhawks {
+  color: var(--text-white);
+}
+
+.scoreboard-cell.psiclones {
+  color: var(--text-black);
+}
+
+.scoreboard-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.scoreboard-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.scoreboard-score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-left: auto;
 }
 
 /* Responsive */
