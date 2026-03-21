@@ -44,6 +44,9 @@ html, body {
   background: var(--bg-blue-grey);
   min-height: 48px;
   cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .header-clickable {
@@ -52,6 +55,7 @@ html, body {
   gap: 12px;
   flex: 1;
   cursor: pointer;
+  min-height: 32px;
 }
 
 .team-icon {
