@@ -274,8 +274,14 @@ function createSlot(index) {
     const isWhiteSlot = index === 6;
     
     slot.classList.add('slot-toggle');
-    slot.classList.add(isWhiteSlot ? 'slot-underpit-w' : 'slot-underpit-b');
-    if (isActive) slot.classList.add('active');
+    
+    // Use standard slot background classes
+    // No (inactive): show team color, Yes (active): show grey
+    if (isActive) {
+      slot.classList.add('slot-neutral');
+    } else {
+      slot.classList.add(isWhiteSlot ? 'slot-white' : 'slot-black');
+    }
     
     slot.innerHTML = `
       <div class="slot-name">Underpit</div>

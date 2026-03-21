@@ -185,25 +185,6 @@ html, body {
   color: var(--text-black);
 }
 
-/* Underpit special */
-.slot-underpit-w {
-  background: var(--bg-white);
-  color: var(--text-black);
-}
-
-.slot-underpit-w.active {
-  background: var(--bg-grey);
-}
-
-.slot-underpit-b {
-  background: var(--bg-dark);
-  color: var(--text-white);
-}
-
-.slot-underpit-b.active {
-  background: var(--bg-grey);
-}
-
 /* Modal */
 .modal {
   display: none;
