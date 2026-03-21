@@ -4,3 +4,6 @@
 .esphome
 secrets.yaml
 .env
+
+# Build artifacts
+web/worldspanner.html

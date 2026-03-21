@@ -1,0 +1,14 @@
+councils:
+  src-feature:
+    description: Multi-perspective review for source code features
+    guidance: |
+      Focus on code quality, architecture, and user experience.
+      Architect has veto power on architectural decisions.
+    advisors:
+      - architect
+      - ux-reviewer
+    phases:
+      - brainstorm
+      - plan
+      - review
+      - compound

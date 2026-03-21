@@ -1,0 +1,16 @@
+{
+  "name": "Worldspanner Scorekeeper",
+  "short_name": "Worldspanner",
+  "description": "Turn-based scorekeeper for Worldspanner",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#404040",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
