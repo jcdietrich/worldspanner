@@ -403,7 +403,22 @@ function init() {
 let selectedSlot = -1; // -1 = header, 0-7 = slots
 
 function handleKeydown(e) {
+  // Ignore keyboard nav when modal is open
+  const settingsModal = document.getElementById('settings-modal');
+  const factionModal = document.getElementById('faction-modal');
+  if (settingsModal.classList.contains('open') || factionModal.classList.contains('open')) {
+    if (e.key === 'Escape') {
+      closeSettingsModal();
+      closeFactionModal();
+    }
+    return;
+  }
+  
   switch (e.key) {
+    case 'Escape':
+      closeSettingsModal();
+      closeFactionModal();
+      break;
     case 'ArrowRight':
     case 'ArrowDown':
       e.preventDefault();
