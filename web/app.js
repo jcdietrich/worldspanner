@@ -284,7 +284,7 @@ function createSlot(index) {
     }
     
     slot.innerHTML = `
-      <div class="slot-name">Underpit</div>
+      <div class="slot-name">Any in Underpit?</div>
       <div class="slot-value">${isActive ? 'Yes' : 'No'}</div>
     `;
     
