@@ -6,4 +6,4 @@ secrets.yaml
 .env
 
 # Build artifacts
-web/scorekeeper-standalone.html
+web/worldspanner.html

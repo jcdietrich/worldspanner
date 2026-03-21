@@ -17,7 +17,7 @@ JS=$(cat app.js)
 JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.png|data:image/png;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.png|data:image/png;base64,$PSICLONES_B64|g")
 
 # Generate standalone HTML
-cat > scorekeeper-standalone.html << HTMLEOF
+cat > worldspanner.html << HTMLEOF
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,5 +79,5 @@ $JS_MODIFIED
 </html>
 HTMLEOF
 
-echo "Created scorekeeper-standalone.html"
-ls -lh scorekeeper-standalone.html
+echo "Created worldspanner.html"
+ls -lh worldspanner.html
