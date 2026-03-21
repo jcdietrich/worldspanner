@@ -310,10 +310,15 @@ function calculateScores() {
       if (score < 0) white++;
       else if (score > 0) black++;
     } else {
-      // Underpit toggles: slot 6 = white when active, slot 7 = black when active
-      if (score !== 0) {
-        if (i === 6) white++;
+      // Underpit toggles: slot 6 = white, slot 7 = black
+      // When inactive (score=0), counts for the slot's team
+      // When active (score!=0), counts for the opposite team
+      if (i === 6) {
+        if (score === 0) white++;
         else black++;
+      } else {
+        if (score === 0) black++;
+        else white++;
       }
     }
   }
