@@ -5,9 +5,9 @@ cd "$(dirname "$0")"
 
 echo "Building standalone HTML..."
 
-# Base64 encode greyscale PNGs
-SKYHAWKS_B64=$(base64 < skyhawks-grey.png)
-PSICLONES_B64=$(base64 < psiclones-grey.png)
+# Base64 encode PNGs
+SKYHAWKS_B64=$(base64 < skyhawks.png)
+PSICLONES_B64=$(base64 < psiclones.png)
 
 # Read CSS and JS
 CSS=$(cat styles.css)
