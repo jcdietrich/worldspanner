@@ -312,7 +312,6 @@ html, body {
   outline-offset: -3px;
 }
 
-/* Scoreboard */
 .scoreboard-cell {
   display: flex;
   align-items: center;
@@ -330,8 +329,8 @@ html, body {
 }
 
 .scoreboard-icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
 }
 
