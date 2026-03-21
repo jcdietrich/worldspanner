@@ -102,6 +102,8 @@ html, body {
   gap: 1px;
   background: var(--grid-line);
   padding: 1px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Slots */
