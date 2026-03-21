@@ -3,11 +3,14 @@ set -e
 
 cd "$(dirname "$0")"
 
+# Check dependencies
+command -v base64 >/dev/null || { echo "Error: base64 required"; exit 1; }
+
 echo "Building standalone HTML..."
 
-# Base64 encode PNGs
-SKYHAWKS_B64=$(base64 < skyhawks.png)
-PSICLONES_B64=$(base64 < psiclones.png)
+# Base64 encode PNGs (tr -d '\n' for cross-platform compatibility)
+SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
+PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
 
 # Read CSS and JS
 CSS=$(cat styles.css)
