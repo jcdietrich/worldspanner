@@ -390,7 +390,10 @@ function closeSettingsModal() {
 // Initialize event listeners
 function init() {
   // Header clickable area to advance phase
-  document.getElementById('header-clickable').addEventListener('click', advancePhase);
+  const headerClickable = document.getElementById('header-clickable');
+  if (headerClickable) {
+    headerClickable.addEventListener('click', advancePhase);
+  }
   
   // Settings button
   document.getElementById('settings-btn').addEventListener('click', (e) => {
