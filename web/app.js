@@ -1,7 +1,17 @@
 // Constants
 const PHASES = [
-  'W Free', 'W Action', 'B Reaction', 'WB Melee', 'W Adventure', 'W Reinforce',
-  'B Free', 'B Action', 'W Reaction', 'BW Melee', 'B Adventure', 'B Reinforce'
+  { name: 'Free', team: 'white' },
+  { name: 'Action', team: 'white' },
+  { name: 'Reaction', team: 'black' },
+  { name: 'Melee', team: 'both-white' },
+  { name: 'Adventure', team: 'white' },
+  { name: 'Reinforce', team: 'white' },
+  { name: 'Free', team: 'black' },
+  { name: 'Action', team: 'black' },
+  { name: 'Reaction', team: 'white' },
+  { name: 'Melee', team: 'both-black' },
+  { name: 'Adventure', team: 'black' },
+  { name: 'Reinforce', team: 'black' }
 ];
 
 const FACTIONS = [
@@ -155,12 +165,20 @@ function renderHeader() {
   const phaseNameEl = document.getElementById('phase-name');
   const roundDisplayEl = document.getElementById('round-display');
   const headerEl = document.getElementById('header');
+  const teamIconEl = document.getElementById('team-icon');
   
-  const phaseName = PHASES[state.phase];
+  const phase = PHASES[state.phase];
   const team = getPhaseTeam(state.phase);
   
-  phaseNameEl.textContent = phaseName;
+  phaseNameEl.textContent = phase.name;
   roundDisplayEl.textContent = `${state.round}/${state.endRound}`;
+  
+  // Set team icon
+  if (phase.team === 'white' || phase.team === 'both-white') {
+    teamIconEl.src = 'skyhawks.png';
+  } else {
+    teamIconEl.src = 'psiclones.png';
+  }
   
   // Set header color based on team
   if (team === 'white') {
@@ -288,7 +306,7 @@ function openSettingsModal() {
   
   // Populate phase select
   phaseSelect.innerHTML = PHASES.map((p, i) => 
-    `<option value="${i}" ${i === state.phase ? 'selected' : ''}>${p}</option>`
+    `<option value="${i}" ${i === state.phase ? 'selected' : ''}>${p.name} (${p.team})</option>`
   ).join('');
   
   // Populate round select
@@ -317,8 +335,8 @@ function closeSettingsModal() {
 
 // Initialize event listeners
 function init() {
-  // Header click to advance phase
-  document.getElementById('phase-display').addEventListener('click', advancePhase);
+  // Header clickable area to advance phase
+  document.getElementById('header-clickable').addEventListener('click', advancePhase);
   
   // Settings button
   document.getElementById('settings-btn').addEventListener('click', (e) => {
