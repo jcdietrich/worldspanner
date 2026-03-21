@@ -16,12 +16,6 @@ const FACTIONS = [
   { name: 'Commoners', location: 'Green Vale' }
 ];
 
-const FIXED_SLOTS = [
-  { name: "Lith's Favour", location: '' },
-  { name: 'Underpit', location: '' },
-  { name: 'Underpit', location: '' }
-];
-
 const STORAGE_KEY = 'worldspanner_state';
 
 // Default state
@@ -274,6 +268,11 @@ function openFactionModal(slotIndex) {
   `).join('');
   
   modal.classList.add('open');
+  
+  // Close on backdrop click
+  modal.onclick = (e) => {
+    if (e.target === modal) closeFactionModal();
+  };
 }
 
 function closeFactionModal() {
@@ -305,6 +304,11 @@ function openSettingsModal() {
   }
   
   modal.classList.add('open');
+  
+  // Close on backdrop click
+  modal.onclick = (e) => {
+    if (e.target === modal) closeSettingsModal();
+  };
 }
 
 function closeSettingsModal() {
@@ -336,8 +340,10 @@ function init() {
   });
   
   document.getElementById('new-game-btn').addEventListener('click', () => {
-    resetGame();
-    closeSettingsModal();
+    if (confirm('Start new game? Current progress will be lost.')) {
+      resetGame();
+      closeSettingsModal();
+    }
   });
   
   document.getElementById('close-settings-btn').addEventListener('click', closeSettingsModal);
