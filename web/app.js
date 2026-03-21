@@ -92,10 +92,12 @@ function getPhaseTeam(phaseIndex) {
 // Advance phase (with Round 1 special logic)
 function advancePhase() {
   if (state.round === 1) {
-    // Round 1: only phases 5 and 11
-    if (state.phase === 5) {
+    // Round 1: normally only phases 5 and 11, but handle edge cases
+    if (state.phase < 5) {
+      state.phase = 5;
+    } else if (state.phase < 11) {
       state.phase = 11;
-    } else if (state.phase === 11) {
+    } else {
       state.phase = 0;
       state.round = 2;
     }
