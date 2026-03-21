@@ -91,6 +91,7 @@ html, body {
   gap: 1px;
   background: var(--grid-line);
   padding: 1px;
+  flex-shrink: 0;
 }
 
 /* Grid */
