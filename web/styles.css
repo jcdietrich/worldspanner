@@ -1,0 +1,327 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark: #000;
+  --bg-grey: #808080;
+  --bg-white: #fff;
+  --header-bg: #404040;
+  --grid-line: #282828;
+  --text-white: #fff;
+  --text-black: #000;
+  --btn-white: #fff;
+  --btn-black: #000;
+  --highlight: #ffff00;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-white);
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--header-bg);
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.header-clickable {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.team-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.phase-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.round-display {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Grid */
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--grid-line);
+  padding: 1px;
+}
+
+/* Slots */
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 8px 4px;
+  min-height: 80px;
+}
+
+.slot-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+
+.slot-location {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.slot-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* Tug-of-war buttons */
+.tow-buttons {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.tow-btn {
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  pointer-events: auto;
+  border: none;
+  opacity: 0.3;
+}
+
+.tow-btn:hover {
+  opacity: 0.5;
+}
+
+.tow-btn:active {
+  opacity: 0.6;
+}
+
+.tow-btn-white {
+  background: var(--btn-white);
+  color: var(--text-black);
+}
+
+.tow-btn-black {
+  background: var(--btn-black);
+  color: var(--text-white);
+  margin-left: auto;
+}
+
+/* Toggle slots */
+.slot-toggle {
+  cursor: pointer;
+}
+
+/* Slot backgrounds */
+.slot-neutral {
+  background: var(--bg-grey);
+  color: var(--text-black);
+}
+
+.slot-black {
+  background: var(--bg-dark);
+  color: var(--text-white);
+}
+
+.slot-white {
+  background: var(--bg-white);
+  color: var(--text-black);
+}
+
+/* Underpit special */
+.slot-underpit-w {
+  background: var(--bg-dark);
+  color: var(--text-white);
+}
+
+.slot-underpit-w.active {
+  background: var(--bg-grey);
+}
+
+.slot-underpit-b {
+  background: var(--bg-white);
+  color: var(--text-black);
+}
+
+.slot-underpit-b.active {
+  background: var(--bg-grey);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 280px;
+  max-width: 90%;
+}
+
+.modal-content h2 {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.setting-row label {
+  font-size: 1rem;
+}
+
+.setting-row select {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#new-game-btn {
+  background: #c00;
+  color: white;
+}
+
+#close-settings-btn,
+#close-faction-btn {
+  background: #444;
+  color: white;
+}
+
+/* Faction list */
+.faction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.faction-option {
+  padding: 12px;
+  background: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.faction-option:hover {
+  background: #444;
+}
+
+.faction-option .location {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Keyboard selection */
+.header-selected {
+  outline: 3px solid var(--highlight);
+  outline-offset: -3px;
+}
+
+.slot-selected {
+  outline: 3px solid var(--highlight);
+  outline-offset: -3px;
+}
+
+/* Responsive */
+@media (min-width: 480px) {
+  .app {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    height: calc(100% - 40px);
+    max-height: 600px;
+  }
+}
