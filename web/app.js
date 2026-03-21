@@ -361,16 +361,25 @@ function closeFactionModal() {
   currentFactionSlot = null;
 }
 
+function refreshPhaseSelect() {
+  const phaseSelect = document.getElementById('phase-select');
+  
+  // Round 1 only shows Reinforce phases
+  const validPhases = state.round === 1 
+    ? PHASES.map((p, i) => ({ ...p, index: i })).filter(p => p.name === 'Reinforce')
+    : PHASES.map((p, i) => ({ ...p, index: i }));
+  
+  phaseSelect.innerHTML = validPhases.map(p => 
+    `<option value="${p.index}" ${p.index === state.phase ? 'selected' : ''}>${p.name} (${p.team})</option>`
+  ).join('');
+}
+
 function openSettingsModal() {
   const modal = document.getElementById('settings-modal');
-  const phaseSelect = document.getElementById('phase-select');
   const roundSelect = document.getElementById('round-select');
   const endRoundSelect = document.getElementById('end-round-select');
   
-  // Populate phase select
-  phaseSelect.innerHTML = PHASES.map((p, i) => 
-    `<option value="${i}" ${i === state.phase ? 'selected' : ''}>${p.name} (${p.team})</option>`
-  ).join('');
+  refreshPhaseSelect();
   
   // Populate round select
   roundSelect.innerHTML = '';
@@ -417,6 +426,8 @@ function init() {
   
   document.getElementById('round-select').addEventListener('change', (e) => {
     setRound(parseInt(e.target.value));
+    // Refresh phase dropdown since valid phases depend on round
+    refreshPhaseSelect();
   });
   
   document.getElementById('end-round-select').addEventListener('change', (e) => {
