@@ -165,6 +165,7 @@ function setFaction(slotIndex, factionName) {
 
 // Render the UI
 function render() {
+  renderScoreboard();
   renderHeader();
   renderGrid();
 }
@@ -203,27 +204,24 @@ function renderGrid() {
     const slot = createSlot(i);
     gridEl.appendChild(slot);
   }
-  
-  // Render scoreboard row
+}
+
+function renderScoreboard() {
+  const scoreboardEl = document.getElementById('scoreboard');
   const scores = calculateScores();
   
-  const skyhawksCell = document.createElement('div');
-  skyhawksCell.className = 'scoreboard-cell skyhawks';
-  skyhawksCell.innerHTML = `
-    <img class="scoreboard-icon" src="skyhawks.png" alt="Skyhawks">
-    <span class="scoreboard-name">Skyhawks</span>
-    <span class="scoreboard-score">${scores.white}</span>
+  scoreboardEl.innerHTML = `
+    <div class="scoreboard-cell skyhawks">
+      <img class="scoreboard-icon" src="skyhawks.png" alt="Skyhawks">
+      <span class="scoreboard-name">Skyhawks</span>
+      <span class="scoreboard-score">${scores.white}</span>
+    </div>
+    <div class="scoreboard-cell psiclones">
+      <img class="scoreboard-icon" src="psiclones.png" alt="Psiclones">
+      <span class="scoreboard-name">Psiclones</span>
+      <span class="scoreboard-score">${scores.black}</span>
+    </div>
   `;
-  gridEl.appendChild(skyhawksCell);
-  
-  const psiclonesCell = document.createElement('div');
-  psiclonesCell.className = 'scoreboard-cell psiclones';
-  psiclonesCell.innerHTML = `
-    <img class="scoreboard-icon" src="psiclones.png" alt="Psiclones">
-    <span class="scoreboard-name">Psiclones</span>
-    <span class="scoreboard-score">${scores.black}</span>
-  `;
-  gridEl.appendChild(psiclonesCell);
 }
 
 function createSlot(index) {
