@@ -173,22 +173,37 @@ function renderHeader() {
   const phaseNameEl = document.getElementById('phase-name');
   const roundDisplayEl = document.getElementById('round-display');
   const headerEl = document.getElementById('header');
+  const teamIconsEl = document.getElementById('team-icons');
   const teamIconEl = document.getElementById('team-icon');
+  const teamIconSecondaryEl = document.getElementById('team-icon-secondary');
   
   const phase = PHASES[state.phase];
   const team = getPhaseTeam(state.phase);
+  const isMelee = phase.team === 'both-white' || phase.team === 'both-black';
   
   phaseNameEl.textContent = phase.name;
   roundDisplayEl.textContent = `${state.round}/${state.endRound}`;
   
-  // Set team icon
-  if (phase.team === 'white' || phase.team === 'both-white') {
-    teamIconEl.src = 'skyhawks.png';
+  // Set team icons - melee shows both with active team first
+  if (isMelee) {
+    teamIconsEl.classList.add('melee');
+    if (phase.team === 'both-white') {
+      teamIconEl.src = 'skyhawks.png';
+      teamIconSecondaryEl.src = 'psiclones.png';
+    } else {
+      teamIconEl.src = 'psiclones.png';
+      teamIconSecondaryEl.src = 'skyhawks.png';
+    }
   } else {
-    teamIconEl.src = 'psiclones.png';
+    teamIconsEl.classList.remove('melee');
+    if (phase.team === 'white') {
+      teamIconEl.src = 'skyhawks.png';
+    } else {
+      teamIconEl.src = 'psiclones.png';
+    }
   }
   
-  // Set header text color based on team (background always blue-grey)
+  // Set header text color to match active team (background always blue-grey)
   headerEl.style.color = team === 'white' ? '#fff' : '#000';
 }
 
