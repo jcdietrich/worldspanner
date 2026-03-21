@@ -27,9 +27,11 @@ const FACTIONS = [
 ];
 
 const STORAGE_KEY = 'worldspanner_state';
+const STATE_VERSION = 1;
 
 // Default state
 const DEFAULT_STATE = {
+  version: STATE_VERSION,
   factions: ['Lords', 'Warriors', 'Defenders', 'Villains', 'Icons'],
   scores: [0, 0, 0, 0, 0, 0, 0, 0],
   phase: 5,
@@ -45,7 +47,13 @@ function loadState() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      return { ...DEFAULT_STATE, ...JSON.parse(saved) };
+      const parsed = JSON.parse(saved);
+      // Migration: if version is missing or outdated, could handle here
+      if (!parsed.version || parsed.version < STATE_VERSION) {
+        console.log('Migrating state from version', parsed.version || 0, 'to', STATE_VERSION);
+        // Future migrations would go here
+      }
+      return { ...DEFAULT_STATE, ...parsed, version: STATE_VERSION };
     }
   } catch (e) {
     console.error('Failed to load state:', e);

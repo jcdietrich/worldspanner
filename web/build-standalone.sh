@@ -12,6 +12,9 @@ echo "Building standalone HTML..."
 SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
 PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
 
+# Base64 encode favicon SVG
+FAVICON_B64=$(base64 < favicon.svg | tr -d '\n')
+
 # Read CSS and JS
 CSS=$(cat styles.css)
 JS=$(cat app.js)
@@ -27,6 +30,8 @@ cat > worldspanner.html << HTMLEOF
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Worldspanner</title>
+  <link rel="icon" href="data:image/svg+xml;base64,$FAVICON_B64">
+  <meta name="theme-color" content="#404040">
   <style>
 $CSS
   </style>
