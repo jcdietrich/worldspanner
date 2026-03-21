@@ -300,6 +300,17 @@ html, body {
   opacity: 0.7;
 }
 
+/* Keyboard selection */
+.header-selected {
+  outline: 3px solid var(--highlight);
+  outline-offset: -3px;
+}
+
+.slot-selected {
+  outline: 3px solid var(--highlight);
+  outline-offset: -3px;
+}
+
 /* Responsive */
 @media (min-width: 480px) {
   .app {
