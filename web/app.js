@@ -306,19 +306,16 @@ function calculateScores() {
   for (let i = 0; i < 8; i++) {
     const score = state.scores[i];
     if (i <= 5) {
-      // Tug-of-war slots: negative = white, positive = black
+      // Tug-of-war slots: negative = white background, positive = black background
       if (score < 0) white++;
       else if (score > 0) black++;
     } else {
-      // Underpit toggles: slot 6 = white, slot 7 = black
-      // When inactive (score=0), counts for the slot's team
-      // When active (score!=0), counts for the opposite team
-      if (i === 6) {
-        if (score === 0) white++;
+      // Underpit toggles: "No" (score=0) shows team color, "Yes" (score!=0) shows grey
+      // Slot 7 (index 6, underpit-w): No = white background = Skyhawks point
+      // Slot 8 (index 7, underpit-b): No = black background = Psiclones point
+      if (score === 0) {
+        if (i === 6) white++;
         else black++;
-      } else {
-        if (score === 0) black++;
-        else white++;
       }
     }
   }

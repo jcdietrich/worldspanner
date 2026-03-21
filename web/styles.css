@@ -187,8 +187,8 @@ html, body {
 
 /* Underpit special */
 .slot-underpit-w {
-  background: var(--bg-dark);
-  color: var(--text-white);
+  background: var(--bg-white);
+  color: var(--text-black);
 }
 
 .slot-underpit-w.active {
@@ -196,8 +196,8 @@ html, body {
 }
 
 .slot-underpit-b {
-  background: var(--bg-white);
-  color: var(--text-black);
+  background: var(--bg-dark);
+  color: var(--text-white);
 }
 
 .slot-underpit-b.active {
