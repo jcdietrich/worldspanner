@@ -206,6 +206,27 @@ function renderGrid() {
     const slot = createSlot(i);
     gridEl.appendChild(slot);
   }
+  
+  // Render scoreboard row
+  const scores = calculateScores();
+  
+  const skyhawksCell = document.createElement('div');
+  skyhawksCell.className = 'scoreboard-cell skyhawks';
+  skyhawksCell.innerHTML = `
+    <img class="scoreboard-icon" src="skyhawks.png" alt="Skyhawks">
+    <span class="scoreboard-name">Skyhawks</span>
+    <span class="scoreboard-score">${scores.white}</span>
+  `;
+  gridEl.appendChild(skyhawksCell);
+  
+  const psiclonesCell = document.createElement('div');
+  psiclonesCell.className = 'scoreboard-cell psiclones';
+  psiclonesCell.innerHTML = `
+    <img class="scoreboard-icon" src="psiclones.png" alt="Psiclones">
+    <span class="scoreboard-name">Psiclones</span>
+    <span class="scoreboard-score">${scores.black}</span>
+  `;
+  gridEl.appendChild(psiclonesCell);
 }
 
 function createSlot(index) {
