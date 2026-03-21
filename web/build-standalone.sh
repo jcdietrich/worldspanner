@@ -11,6 +11,7 @@ echo "Building standalone HTML..."
 # Base64 encode PNGs (tr -d '\n' for cross-platform compatibility)
 SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
 PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
+MELEE_B64=$(base64 < melee.png | tr -d '\n')
 
 # Base64 encode favicon SVG
 FAVICON_B64=$(base64 < favicon.svg | tr -d '\n')
@@ -20,7 +21,7 @@ CSS=$(cat styles.css)
 JS=$(cat app.js)
 
 # Update JS to use data URIs for images
-JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.png|data:image/png;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.png|data:image/png;base64,$PSICLONES_B64|g")
+JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.png|data:image/png;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.png|data:image/png;base64,$PSICLONES_B64|g" | sed "s|melee.png|data:image/png;base64,$MELEE_B64|g")
 
 # Generate standalone HTML
 cat > worldspanner.html << HTMLEOF
@@ -38,6 +39,10 @@ $CSS
 </head>
 <body>
   <div class="app">
+    <div class="scoreboard" id="scoreboard"></div>
+
+    <main class="grid" id="grid"></main>
+
     <header class="header" id="header">
       <div class="header-clickable" id="header-clickable">
         <img class="team-icon" id="team-icon" src="data:image/png;base64,$SKYHAWKS_B64" alt="Team">
@@ -46,8 +51,6 @@ $CSS
       </div>
       <button class="settings-btn" id="settings-btn">⚙</button>
     </header>
-
-    <main class="grid" id="grid"></main>
 
     <div class="modal" id="settings-modal">
       <div class="modal-content">
