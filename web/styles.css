@@ -54,24 +54,10 @@ html, body {
   cursor: pointer;
 }
 
-.team-icons {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .team-icon {
   width: 32px;
   height: 32px;
   object-fit: contain;
-}
-
-.team-icon-secondary {
-  display: none;
-}
-
-.team-icons.melee .team-icon-secondary {
-  display: block;
 }
 
 .phase-name {
