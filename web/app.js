@@ -188,14 +188,8 @@ function renderHeader() {
     teamIconEl.src = 'psiclones.png';
   }
   
-  // Set header color based on team
-  if (team === 'white') {
-    headerEl.style.background = '#404040';
-    headerEl.style.color = '#fff';
-  } else {
-    headerEl.style.background = '#a0a0a0';
-    headerEl.style.color = '#000';
-  }
+  // Set header text color based on team (background always blue-grey)
+  headerEl.style.color = team === 'white' ? '#fff' : '#000';
 }
 
 function renderGrid() {
