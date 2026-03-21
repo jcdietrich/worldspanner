@@ -278,6 +278,28 @@ function setSlotBackground(slot, score) {
   }
 }
 
+function calculateScores() {
+  let white = 0;
+  let black = 0;
+  
+  for (let i = 0; i < 8; i++) {
+    const score = state.scores[i];
+    if (i <= 5) {
+      // Tug-of-war slots: negative = white, positive = black
+      if (score < 0) white++;
+      else if (score > 0) black++;
+    } else {
+      // Underpit toggles: slot 6 = white when active, slot 7 = black when active
+      if (score !== 0) {
+        if (i === 6) white++;
+        else black++;
+      }
+    }
+  }
+  
+  return { white, black };
+}
+
 // Modal state
 let currentFactionSlot = null;
 
