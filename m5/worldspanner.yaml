@@ -1,0 +1,501 @@
+substitutions:
+  friendly_name: "Worldspanner"
+
+esphome:
+  name: worldspanner
+  on_boot:
+    priority: 600
+    then:
+      - delay: 5s
+      - script.execute: publish_defaults
+      - script.execute: update_display
+
+interval:
+  - interval: 500ms
+    then:
+      - script.execute: update_display
+
+esp32:
+  board: m5stack-fire
+  framework:
+    type: arduino
+    version: recommended
+  
+psram:
+  mode: quad
+  speed: 40MHz
+
+wifi:
+  ssid: !secret wifi_ssid 
+  password: !secret wifi_password
+  ap:
+    ssid: ${friendly_name} Fallback
+
+captive_portal:
+
+logger:
+  level: DEBUG
+
+api:
+  reboot_timeout: 0s
+
+mqtt:
+  id: mqtt_client
+  broker: !secret mqtt_broker 
+  username: !secret mqtt_username 
+  password: !secret mqtt_password
+  reboot_timeout: 0s
+  discovery: false
+  on_message:
+    # Subscribe to /state topics to restore from retained messages on boot
+    - topic: worldspanner/slot1/name/state
+      then:
+        - lambda: 'if (x.length() > 0) id(slot1_name) = x;'
+        - script.execute: update_display
+    - topic: worldspanner/slot2/name/state
+      then:
+        - lambda: 'if (x.length() > 0) id(slot2_name) = x;'
+        - script.execute: update_display
+    - topic: worldspanner/slot3/name/state
+      then:
+        - lambda: 'if (x.length() > 0) id(slot3_name) = x;'
+        - script.execute: update_display
+    - topic: worldspanner/slot4/name/state
+      then:
+        - lambda: 'if (x.length() > 0) id(slot4_name) = x;'
+        - script.execute: update_display
+    - topic: worldspanner/slot5/name/state
+      then:
+        - lambda: 'if (x.length() > 0) id(slot5_name) = x;'
+        - script.execute: update_display
+    - topic: worldspanner/end_round/state
+      then:
+        - lambda: 'if (x.length() > 0) id(end_round) = atoi(x.c_str());'
+        - script.execute: update_display
+    # Subscribe to /set topics for HA commands (and echo to /state)
+    - topic: worldspanner/slot1/name/set
+      then:
+        - lambda: 'id(slot1_name) = x;'
+        - mqtt.publish:
+            topic: worldspanner/slot1/name/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    - topic: worldspanner/slot2/name/set
+      then:
+        - lambda: 'id(slot2_name) = x;'
+        - mqtt.publish:
+            topic: worldspanner/slot2/name/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    - topic: worldspanner/slot3/name/set
+      then:
+        - lambda: 'id(slot3_name) = x;'
+        - mqtt.publish:
+            topic: worldspanner/slot3/name/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    - topic: worldspanner/slot4/name/set
+      then:
+        - lambda: 'id(slot4_name) = x;'
+        - mqtt.publish:
+            topic: worldspanner/slot4/name/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    - topic: worldspanner/slot5/name/set
+      then:
+        - lambda: 'id(slot5_name) = x;'
+        - mqtt.publish:
+            topic: worldspanner/slot5/name/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    - topic: worldspanner/end_round/set
+      then:
+        - lambda: 'id(end_round) = atoi(x.c_str());'
+        - mqtt.publish:
+            topic: worldspanner/end_round/state
+            payload: !lambda 'return x;'
+            retain: true
+        - script.execute: update_display
+    # Reset game: scores to 0, phase to 5 (W Reinforce), round to 1, selection to phase/round
+    - topic: worldspanner/game/reset
+      then:
+        - lambda: |-
+            for (int i = 0; i < 8; i++) {
+              id(slot_values)[i] = 0;
+            }
+            id(phase_index) = 5;  // Round 1 starts at W Reinforce
+            id(round_value) = 1;
+            id(selected_index) = 0;  // Move selection to phase/round
+        - script.execute: update_display
+
+ota:
+  platform: esphome
+
+globals:
+  - id: selected_index
+    type: int
+    initial_value: '0'
+  - id: slot_values
+    type: int[8]
+    initial_value: '{0,0,0,0,0,0,0,0}'
+  - id: round_value
+    type: int
+    initial_value: '1'
+  - id: end_round
+    type: int
+    initial_value: '10'
+  - id: phase_index
+    type: int
+    initial_value: '5'  # Round 1 starts at W Reinforce
+  - id: slot1_name
+    type: std::string
+    initial_value: '"Faction 1"'
+  - id: slot2_name
+    type: std::string
+    initial_value: '"Faction 2"'
+  - id: slot3_name
+    type: std::string
+    initial_value: '"Faction 3"'
+  - id: slot4_name
+    type: std::string
+    initial_value: '"Faction 4"'
+  - id: slot5_name
+    type: std::string
+    initial_value: '"Faction 5"'
+
+binary_sensor:
+  - platform: gpio
+    id: btn_left
+    pin:
+      number: GPIO39
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            // Order: phase+round(0) -> slots 1-8 (1-8)
+            // Round 1 special: W Reinforce(5) -> B Reinforce(11) -> Round 2
+            // Round 2+: full 12 phase cycle
+            int idx = id(selected_index);
+            if (idx == 0) {
+              // Phase+Round linked: go backwards
+              if (id(round_value) == 1) {
+                // Round 1: only phases 5 and 11
+                if (id(phase_index) == 11) {
+                  id(phase_index) = 5;
+                }
+                // At phase 5, round 1: do nothing (start of game)
+              } else if (id(round_value) == 2 && id(phase_index) == 0) {
+                // Going back from round 2 phase 0 -> round 1 phase 11
+                id(phase_index) = 11;
+                id(round_value) = 1;
+              } else if (id(phase_index) > 0) {
+                id(phase_index)--;
+              } else if (id(round_value) > 2) {
+                // Wrap to B Reinforce and decrement round
+                id(phase_index) = 11;
+                id(round_value)--;
+              }
+            } else if (idx >= 1 && idx <= 6) {
+              // Slots 1-6: tug-of-war decrement
+              id(slot_values)[idx - 1]--;
+            } else if (idx == 7 || idx == 8) {
+              // Slots 7-8: 0-1 toggles
+              if (id(slot_values)[idx - 1] > 0) id(slot_values)[idx - 1] = 0;
+            }
+        - script.execute: update_display
+
+  - platform: gpio
+    id: btn_center
+    pin:
+      number: GPIO38
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            // Order: phase+round(0) -> slots 1-8 (1-8), total 9 items
+            id(selected_index) = (id(selected_index) + 1) % 9;
+        - script.execute: update_display
+
+  - platform: gpio
+    id: btn_right
+    pin:
+      number: GPIO37
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            // Order: phase+round(0) -> slots 1-8 (1-8)
+            // Round 1 special: W Reinforce(5) -> B Reinforce(11) -> Round 2
+            // Round 2+: full 12 phase cycle
+            int idx = id(selected_index);
+            if (idx == 0) {
+              // Phase+Round linked: go forwards
+              if (id(round_value) == 1) {
+                // Round 1: only phases 5 and 11
+                if (id(phase_index) == 5) {
+                  id(phase_index) = 11;
+                } else if (id(phase_index) == 11) {
+                  // End of round 1 -> start round 2 at phase 0
+                  id(phase_index) = 0;
+                  id(round_value) = 2;
+                }
+              } else if (id(phase_index) < 11) {
+                id(phase_index)++;
+              } else if (id(round_value) < id(end_round)) {
+                // Wrap to W Free and increment round
+                id(phase_index) = 0;
+                id(round_value)++;
+              }
+              // At end_round, B Reinforce: do nothing
+            } else if (idx >= 1 && idx <= 6) {
+              // Slots 1-6: tug-of-war increment
+              id(slot_values)[idx - 1]++;
+            } else if (idx == 7 || idx == 8) {
+              // Slots 7-8: 0-1 toggles
+              if (id(slot_values)[idx - 1] < 1) id(slot_values)[idx - 1] = 1;
+            }
+        - script.execute: update_display
+
+output:
+  - platform: ledc
+    pin: 32
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: ${friendly_name} Backlight
+    restore_mode: ALWAYS_ON
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+  miso_pin: 19
+
+font:
+  - file: "gfonts://Source+Sans+Pro"
+    id: font_large
+    size: 32
+    glyphs: '0123456789NoYes'
+  - file: "gfonts://Source+Sans+Pro"
+    id: font_medium
+    size: 20
+    glyphs: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .-+:/%?'''
+  - file: "gfonts://Source+Sans+Pro"
+    id: font_small
+    size: 14
+    glyphs: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .-+:'''
+
+script:
+  - id: update_display
+    then:
+      - component.update: my_display
+  - id: publish_defaults
+    then:
+      # Create faction select entities via MQTT discovery
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/faction1_name/config
+          payload: '{"name":"Faction 1","unique_id":"worldspanner_faction1_name","command_topic":"worldspanner/slot1/name/set","state_topic":"worldspanner/slot1/name/state","options":["Lords","Warriors","Defenders","Villains","Icons","Outcasts","Exemplars","Adventurers","Commoners"],"icon":"mdi:flag","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/faction2_name/config
+          payload: '{"name":"Faction 2","unique_id":"worldspanner_faction2_name","command_topic":"worldspanner/slot2/name/set","state_topic":"worldspanner/slot2/name/state","options":["Lords","Warriors","Defenders","Villains","Icons","Outcasts","Exemplars","Adventurers","Commoners"],"icon":"mdi:flag","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/faction3_name/config
+          payload: '{"name":"Faction 3","unique_id":"worldspanner_faction3_name","command_topic":"worldspanner/slot3/name/set","state_topic":"worldspanner/slot3/name/state","options":["Lords","Warriors","Defenders","Villains","Icons","Outcasts","Exemplars","Adventurers","Commoners"],"icon":"mdi:flag","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/faction4_name/config
+          payload: '{"name":"Faction 4","unique_id":"worldspanner_faction4_name","command_topic":"worldspanner/slot4/name/set","state_topic":"worldspanner/slot4/name/state","options":["Lords","Warriors","Defenders","Villains","Icons","Outcasts","Exemplars","Adventurers","Commoners"],"icon":"mdi:flag","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/faction5_name/config
+          payload: '{"name":"Faction 5","unique_id":"worldspanner_faction5_name","command_topic":"worldspanner/slot5/name/set","state_topic":"worldspanner/slot5/name/state","options":["Lords","Warriors","Defenders","Villains","Icons","Outcasts","Exemplars","Adventurers","Commoners"],"icon":"mdi:flag","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      # Remove old text entities
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/faction1_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/faction2_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/faction3_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/faction4_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/faction5_name/config
+          payload: ""
+          retain: true
+      # Create end_round select entity
+      - mqtt.publish:
+          topic: homeassistant/select/worldspanner/end_round/config
+          payload: '{"name":"End Round","unique_id":"worldspanner_end_round","command_topic":"worldspanner/end_round/set","state_topic":"worldspanner/end_round/state","options":["8","9","10","11","12"],"icon":"mdi:flag-checkered","device":{"identifiers":["worldspanner"],"name":"Worldspanner","model":"M5Stack Fire","manufacturer":"M5Stack"}}'
+          retain: true
+      # Remove old number entity
+      - mqtt.publish:
+          topic: homeassistant/number/worldspanner/end_round/config
+          payload: ""
+          retain: true
+      # State values are restored from retained MQTT messages via subscriptions
+      # Remove old player entities
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/player1_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/player2_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/player3_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/player4_name/config
+          payload: ""
+          retain: true
+      - mqtt.publish:
+          topic: homeassistant/text/worldspanner/player5_name/config
+          payload: ""
+          retain: true
+
+
+display:
+  - platform: ili9xxx
+    model: M5STACK
+    cs_pin: 14
+    dc_pin: 27
+    reset_pin: 33
+    invert_colors: true
+    id: my_display
+    update_interval: never
+    lambda: |-
+      // 12 phases: W Free, W Action, B Reaction, WB Melee, W Adventure, W Reinforce
+      //            B Free, B Action, W Reaction, BW Melee, B Adventure, B Reinforce
+      const char* phases[] = {
+        "W Free", "W Action", "B Reaction", "WB Melee", "W Adventure", "W Reinforce",
+        "B Free", "B Action", "W Reaction", "BW Melee", "B Adventure", "B Reinforce"
+      };
+      Color phase_colors[] = {
+        Color(128, 128, 128),  // W Free - grey
+        Color(255, 0, 0),      // W Action - red
+        Color(0, 0, 255),      // B Reaction - blue
+        Color(255, 165, 0),    // WB Melee - orange
+        Color(0, 255, 0),      // W Adventure - green
+        Color(128, 0, 128),    // W Reinforce - purple
+        Color(128, 128, 128),  // B Free - grey
+        Color(255, 0, 0),      // B Action - red
+        Color(0, 0, 255),      // W Reaction - blue
+        Color(255, 165, 0),    // BW Melee - orange
+        Color(0, 255, 0),      // B Adventure - green
+        Color(128, 0, 128)     // B Reinforce - purple
+      };
+      
+      it.fill(Color(0, 0, 0));
+      
+      int selected = id(selected_index);
+      int header_height = 32;
+      
+      // Phase (left) and Round (right) - both selected as index 0
+      int phase_idx = id(phase_index);
+      Color header_col = (selected == 0) ? Color(255, 255, 0) : phase_colors[phase_idx];
+      it.print(10, 6, id(font_medium), header_col, phases[phase_idx]);
+      
+      // Round shows current/end without label
+      char round_str[16];
+      snprintf(round_str, sizeof(round_str), "%d/%d", id(round_value), id(end_round));
+      it.print(310, 6, id(font_medium), header_col, TextAlign::TOP_RIGHT, round_str);
+      
+      it.horizontal_line(0, header_height, 320, Color(80, 80, 80));
+      
+      // Get slot names
+      const char* slot_names[8];
+      slot_names[0] = id(slot1_name).c_str();
+      slot_names[1] = id(slot2_name).c_str();
+      slot_names[2] = id(slot3_name).c_str();
+      slot_names[3] = id(slot4_name).c_str();
+      slot_names[4] = id(slot5_name).c_str();
+      slot_names[5] = "Lith's Favour";
+      slot_names[6] = "Underpit";
+      slot_names[7] = "Underpit";
+      
+      // Layout: 2 columns x 4 rows for 8 slots
+      int available_height = 240 - header_height;
+      int slot_width = 160;
+      int slot_height = available_height / 4;
+      
+      for (int i = 0; i < 8; i++) {
+        int col = i % 2;
+        int row = i / 2;
+        int x = col * slot_width;
+        int y = header_height + row * slot_height;
+        
+        int val = id(slot_values)[i];
+        Color bg_color, text_color;
+        
+        // Special handling for slots 7-8 (indices 6-7) - Underpit toggles
+        if (i == 6) {
+          // Slot 7: white text, 0=black bg, 1=grey bg
+          text_color = Color(255, 255, 255);
+          bg_color = (val == 0) ? Color(0, 0, 0) : Color(128, 128, 128);
+        } else if (i == 7) {
+          // Slot 8: black text, 0=white bg, 1=grey bg
+          text_color = Color(0, 0, 0);
+          bg_color = (val == 0) ? Color(255, 255, 255) : Color(128, 128, 128);
+        } else {
+          // Tug-of-war scoring for slots 1-6
+          if (val == 0) {
+            bg_color = Color(128, 128, 128);  // grey
+            text_color = Color(0, 0, 0);       // black text
+          } else if (val > 0) {
+            bg_color = Color(0, 0, 0);         // black
+            text_color = Color(255, 255, 255); // white text
+          } else {
+            bg_color = Color(255, 255, 255);   // white
+            text_color = Color(0, 0, 0);       // black text
+          }
+        }
+        
+        // Fill background
+        it.filled_rectangle(x + 1, y + 1, slot_width - 2, slot_height - 2, bg_color);
+        
+        // Selection highlight (yellow border) - slots are indices 1-8
+        if (selected == i + 1) {
+          it.rectangle(x + 1, y + 1, slot_width - 2, slot_height - 2, Color(255, 255, 0));
+          it.rectangle(x + 2, y + 2, slot_width - 4, slot_height - 4, Color(255, 255, 0));
+          it.rectangle(x + 3, y + 3, slot_width - 6, slot_height - 6, Color(255, 255, 0));
+        }
+        
+        // Name (truncated for small slots)
+        it.print(x + slot_width / 2, y + 4, id(font_small), text_color, TextAlign::TOP_CENTER, slot_names[i]);
+        
+        // Value - show absolute value (no minus sign for negative)
+        // Slots 7-8 show "No"/"Yes" instead of numbers
+        char val_str[12];
+        if (i == 6 || i == 7) {
+          snprintf(val_str, sizeof(val_str), "%s", (val == 0) ? "No" : "Yes");
+        } else {
+          int display_val = (val < 0) ? -val : val;
+          snprintf(val_str, sizeof(val_str), "%d", display_val);
+        }
+        it.print(x + slot_width / 2, y + slot_height / 2 + 8, id(font_large), text_color, TextAlign::CENTER, val_str);
+      }
+      
+      // Grid lines - vertical center line and 3 horizontal lines
+      it.vertical_line(160, header_height, available_height, Color(40, 40, 40));
+      for (int r = 1; r < 4; r++) {
+        it.horizontal_line(0, header_height + r * slot_height, 320, Color(40, 40, 40));
+      }
