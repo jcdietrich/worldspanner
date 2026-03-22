@@ -153,12 +153,16 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
   cursor: pointer;
   pointer-events: auto;
   border: none;
   opacity: 0.3;
+}
+
+.tow-btn img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .tow-btn:hover {

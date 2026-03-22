@@ -249,8 +249,8 @@ function createSlot(index) {
       <div class="slot-location">${location}</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1">−</button>
-        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1">+</button>
+        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
@@ -265,8 +265,8 @@ function createSlot(index) {
       <div class="slot-name">Lith's Favour</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1">−</button>
-        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1">+</button>
+        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
