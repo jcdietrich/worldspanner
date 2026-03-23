@@ -137,6 +137,12 @@ html, body {
   text-align: center;
 }
 
+.milestone {
+  color: #d4af37;
+  font-weight: 700;
+  opacity: 1;
+}
+
 .slot-value {
   font-size: 2rem;
   font-weight: 700;
