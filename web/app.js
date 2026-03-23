@@ -288,8 +288,9 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     
     slot.innerHTML = `
       <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
-      <div class="slot-location">${location || '—'}${milestone ? ` <span class="milestone">${milestone}</span>` : ''}</div>
+      <div class="slot-location">${location || '—'}</div>
       <div class="slot-value">${absScore}</div>
+      ${milestone ? `<div class="milestone">${milestone}</div>` : ''}
       <div class="tow-buttons">
         <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
         <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1"><img src="psiclones.png" alt="+"></button>
