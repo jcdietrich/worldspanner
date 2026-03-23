@@ -44,12 +44,12 @@ $CSS
     <main class="grid" id="grid"></main>
 
     <header class="header" id="header">
-      <div class="header-clickable" id="header-clickable">
+      <div class="header-clickable" id="header-clickable" title="Click to advance phase">
         <img class="team-icon" id="team-icon" src="data:image/png;base64,$SKYHAWKS_B64" alt="Team">
         <span class="phase-name" id="phase-name">Reinforce</span>
         <span class="round-display" id="round-display">1/10</span>
       </div>
-      <button class="settings-btn" id="settings-btn">⚙</button>
+      <button class="settings-btn" id="settings-btn" title="Open settings">⚙</button>
     </header>
 
     <div class="modal" id="settings-modal">

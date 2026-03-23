@@ -287,13 +287,13 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     const milestone = absScore >= 4 ? '4' : (absScore >= 3 ? '3' : '');
     
     slot.innerHTML = `
-      <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
+      <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
       <div class="slot-location">${location || '—'}</div>
       <div class="slot-value">${absScore}</div>
-      ${milestone ? `<div class="milestone">${milestone}</div>` : ''}
+      ${milestone ? `<div class="milestone" title="${milestone} Favor Tile">${milestone}</div>` : ''}
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Capture Adventure for Skyhawks"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Capture Adventure for Psiclones"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
@@ -308,8 +308,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-name">Lith's Favour</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Capture Adventure for Skyhawks"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Capture Adventure for Psiclones"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
@@ -341,6 +341,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="underpit-value"><img class="underpit-icon" src="${teamLogo}" alt=""><span>${isActive ? 'Yes' : 'No'}</span></div>
     `;
     
+    slot.title = 'Click to toggle';
     slot.addEventListener('click', () => toggleSlot(scoreIndex));
   }
   
