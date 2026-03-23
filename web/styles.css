@@ -140,8 +140,7 @@ html, body {
 .milestone {
   position: absolute;
   bottom: 8px;
-  right: 50%;
-  transform: translateX(30px);
+  right: 20%;
   width: 20px;
   height: 20px;
   background: #d4af37;
