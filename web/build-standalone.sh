@@ -6,19 +6,53 @@ cd "$(dirname "$0")"
 # Check dependencies
 command -v base64 >/dev/null || { echo "Error: base64 required"; exit 1; }
 
+# Check for optimization tools
+HAS_PNGQUANT=$(command -v pngquant >/dev/null && echo 1 || echo 0)
+HAS_TERSER=$(command -v terser >/dev/null && echo 1 || echo 0)
+HAS_CLEANCSS=$(command -v cleancss >/dev/null && echo 1 || echo 0)
+
 echo "Building standalone HTML..."
 
-# Base64 encode PNGs (tr -d '\n' for cross-platform compatibility)
-SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
-PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
-MELEE_B64=$(base64 < melee.png | tr -d '\n')
+# Create temp directory for optimized images
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
+
+# Optimize and base64 encode PNGs
+if [ "$HAS_PNGQUANT" = "1" ]; then
+  echo "Optimizing images with pngquant..."
+  pngquant --quality=65-80 --output "$TMPDIR/skyhawks.png" skyhawks.png 2>/dev/null || cp skyhawks.png "$TMPDIR/skyhawks.png"
+  pngquant --quality=65-80 --output "$TMPDIR/psiclones.png" psiclones.png 2>/dev/null || cp psiclones.png "$TMPDIR/psiclones.png"
+  pngquant --quality=65-80 --output "$TMPDIR/melee.png" melee.png 2>/dev/null || cp melee.png "$TMPDIR/melee.png"
+  SKYHAWKS_B64=$(base64 < "$TMPDIR/skyhawks.png" | tr -d '\n')
+  PSICLONES_B64=$(base64 < "$TMPDIR/psiclones.png" | tr -d '\n')
+  MELEE_B64=$(base64 < "$TMPDIR/melee.png" | tr -d '\n')
+else
+  echo "pngquant not found, skipping image optimization"
+  SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
+  PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
+  MELEE_B64=$(base64 < melee.png | tr -d '\n')
+fi
 
 # Base64 encode favicon SVG
 FAVICON_B64=$(base64 < favicon.svg | tr -d '\n')
 
-# Read CSS and JS
-CSS=$(cat styles.css)
-JS=$(cat app.js)
+# Minify CSS
+if [ "$HAS_CLEANCSS" = "1" ]; then
+  echo "Minifying CSS with clean-css..."
+  CSS=$(cleancss styles.css)
+else
+  echo "clean-css not found, using unminified CSS"
+  CSS=$(cat styles.css)
+fi
+
+# Minify JS
+if [ "$HAS_TERSER" = "1" ]; then
+  echo "Minifying JS with terser..."
+  JS=$(terser app.js --compress --mangle)
+else
+  echo "terser not found, using unminified JS"
+  JS=$(cat app.js)
+fi
 
 # Update JS to use data URIs for images
 JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.png|data:image/png;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.png|data:image/png;base64,$PSICLONES_B64|g" | sed "s|melee.png|data:image/png;base64,$MELEE_B64|g")
