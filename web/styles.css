@@ -125,6 +125,12 @@ html, body {
   cursor: pointer;
 }
 
+.dropdown-arrow {
+  font-size: 0.6rem;
+  color: #999;
+  margin-left: 2px;
+}
+
 .slot-location {
   font-size: 0.65rem;
   opacity: 0.7;

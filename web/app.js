@@ -245,7 +245,7 @@ function createSlot(index) {
     const location = getFactionLocation(factionName);
     
     slot.innerHTML = `
-      <div class="slot-name">${factionName}</div>
+      <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
       <div class="slot-location">${location}</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
