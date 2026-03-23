@@ -32,8 +32,9 @@ const STATE_VERSION = 1;
 // Default state
 const DEFAULT_STATE = {
   version: STATE_VERSION,
-  factions: ['Lords', 'Warriors', 'Defenders', 'Villains', 'Icons'],
-  scores: [0, 0, 0, 0, 0, 0, 0, 0],
+  factionCount: 5,
+  factions: ['Lords', 'Warriors', 'Defenders', 'Villains', 'Icons', 'Outcasts', 'Exemplars', 'Adventurers', 'Commoners'],
+  scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   phase: 5,
   round: 1,
   endRound: 10
@@ -138,18 +139,28 @@ function setEndRound(endRound) {
   render();
 }
 
-// Adjust tug-of-war score (slots 0-5)
+// Set faction count
+function setFactionCount(count) {
+  state.factionCount = count;
+  saveState();
+  render();
+}
+
+// Adjust tug-of-war score (factions + Lith's Favour)
 function adjustScore(slotIndex, delta) {
-  if (slotIndex >= 0 && slotIndex <= 5) {
+  const maxTowIndex = state.factionCount; // factions (0 to factionCount-1) + Lith (factionCount)
+  if (slotIndex >= 0 && slotIndex <= maxTowIndex) {
     state.scores[slotIndex] += delta;
     saveState();
     render();
   }
 }
 
-// Toggle boolean (slots 6-7)
+// Toggle boolean (Underpit slots)
 function toggleSlot(slotIndex) {
-  if (slotIndex === 6 || slotIndex === 7) {
+  const underpitWhiteIndex = state.factionCount + 1;
+  const underpitBlackIndex = state.factionCount + 2;
+  if (slotIndex === underpitWhiteIndex || slotIndex === underpitBlackIndex) {
     state.scores[slotIndex] = state.scores[slotIndex] === 0 ? 1 : 0;
     saveState();
     render();
@@ -158,7 +169,7 @@ function toggleSlot(slotIndex) {
 
 // Set faction for slot
 function setFaction(slotIndex, factionName) {
-  if (slotIndex >= 0 && slotIndex <= 4) {
+  if (slotIndex >= 0 && slotIndex < state.factionCount) {
     state.factions[slotIndex] = factionName;
     saveState();
     render();
@@ -202,8 +213,18 @@ function renderGrid() {
   const gridEl = document.getElementById('grid');
   gridEl.innerHTML = '';
   
-  for (let i = 0; i < 8; i++) {
-    const slot = createSlot(i);
+  const factionCount = state.factionCount;
+  // Total slots: factions + Lith's Favour + 2 Underpit + blank if odd total
+  const baseSlots = factionCount + 1 + 2; // factions + Lith + 2 Underpit
+  const needsBlank = baseSlots % 2 !== 0;
+  const totalSlots = needsBlank ? baseSlots + 1 : baseSlots;
+  
+  // Update grid rows dynamically
+  const rows = totalSlots / 2;
+  gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+  
+  for (let i = 0; i < totalSlots; i++) {
+    const slot = createSlot(i, factionCount, needsBlank, totalSlots);
     gridEl.appendChild(slot);
   }
 }
@@ -233,14 +254,19 @@ function renderScoreboard() {
   scoreboardEl.appendChild(psiclonesCell);
 }
 
-function createSlot(index) {
+function createSlot(index, factionCount, needsBlank, totalSlots) {
   const slot = document.createElement('div');
   slot.className = 'slot';
   
+  const lithIndex = factionCount;
+  const underpitWhiteIndex = factionCount + 1;
+  const underpitBlackIndex = factionCount + 2;
+  const blankIndex = needsBlank ? totalSlots - 1 : -1;
+  
   const score = state.scores[index];
   
-  if (index <= 4) {
-    // Faction slots (0-4)
+  if (index < factionCount) {
+    // Faction slots
     const factionName = state.factions[index];
     const location = getFactionLocation(factionName);
     
@@ -259,7 +285,7 @@ function createSlot(index) {
     // Faction name click handler
     slot.querySelector('.slot-name').addEventListener('click', () => openFactionModal(index));
     
-  } else if (index === 5) {
+  } else if (index === lithIndex) {
     // Lith's Favour
     slot.innerHTML = `
       <div class="slot-name">Lith's Favour</div>
@@ -272,10 +298,10 @@ function createSlot(index) {
     
     setSlotBackground(slot, score);
     
-  } else {
-    // Underpit toggles (6-7)
+  } else if (index === underpitWhiteIndex || index === underpitBlackIndex) {
+    // Underpit toggles
     const isActive = score !== 0;
-    const isWhiteSlot = index === 6;
+    const isWhiteSlot = index === underpitWhiteIndex;
     
     slot.classList.add('slot-toggle');
     
@@ -293,6 +319,11 @@ function createSlot(index) {
     `;
     
     slot.addEventListener('click', () => toggleSlot(index));
+    
+  } else if (index === blankIndex) {
+    // Blank cell for even grid
+    slot.classList.add('slot-blank');
+    slot.innerHTML = '';
   }
   
   return slot;
@@ -313,22 +344,23 @@ function calculateScores() {
   let white = 0;
   let black = 0;
   
-  for (let i = 0; i < 8; i++) {
+  const factionCount = state.factionCount;
+  const lithIndex = factionCount;
+  const underpitWhiteIndex = factionCount + 1;
+  const underpitBlackIndex = factionCount + 2;
+  
+  // Tug-of-war slots (factions + Lith's Favour)
+  for (let i = 0; i <= lithIndex; i++) {
     const score = state.scores[i];
-    if (i <= 5) {
-      // Tug-of-war slots: negative = white background, positive = black background
-      if (score < 0) white++;
-      else if (score > 0) black++;
-    } else {
-      // Underpit toggles: "No" (score=0) shows team color, "Yes" (score!=0) shows grey
-      // Slot 7 (index 6, underpit-w): No = white background = Skyhawks point
-      // Slot 8 (index 7, underpit-b): No = black background = Psiclones point
-      if (score === 0) {
-        if (i === 6) white++;
-        else black++;
-      }
-    }
+    if (score < 0) white++;
+    else if (score > 0) black++;
   }
+  
+  // Underpit toggles: "No" (score=0) shows team color = point for that team
+  const underpitWhiteScore = state.scores[underpitWhiteIndex];
+  const underpitBlackScore = state.scores[underpitBlackIndex];
+  if (underpitWhiteScore === 0) white++;
+  if (underpitBlackScore === 0) black++;
   
   return { white, black };
 }
@@ -378,6 +410,7 @@ function openSettingsModal() {
   const modal = document.getElementById('settings-modal');
   const roundSelect = document.getElementById('round-select');
   const endRoundSelect = document.getElementById('end-round-select');
+  const factionCountSelect = document.getElementById('faction-count-select');
   
   refreshPhaseSelect();
   
@@ -391,6 +424,12 @@ function openSettingsModal() {
   endRoundSelect.innerHTML = '';
   for (let r = 8; r <= 12; r++) {
     endRoundSelect.innerHTML += `<option value="${r}" ${r === state.endRound ? 'selected' : ''}>${r}</option>`;
+  }
+  
+  // Populate faction count select
+  factionCountSelect.innerHTML = '';
+  for (let f = 5; f <= 9; f++) {
+    factionCountSelect.innerHTML += `<option value="${f}" ${f === state.factionCount ? 'selected' : ''}>${f}</option>`;
   }
   
   modal.classList.add('open');
@@ -432,6 +471,10 @@ function init() {
   
   document.getElementById('end-round-select').addEventListener('change', (e) => {
     setEndRound(parseInt(e.target.value));
+  });
+  
+  document.getElementById('faction-count-select').addEventListener('change', (e) => {
+    setFactionCount(parseInt(e.target.value));
   });
   
   document.getElementById('new-game-btn').addEventListener('click', () => {

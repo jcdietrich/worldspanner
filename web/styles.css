@@ -211,6 +211,10 @@ html, body {
   color: var(--text-black);
 }
 
+.slot-blank {
+  background: var(--bg-grey);
+}
+
 /* Modal */
 .modal {
   display: none;
