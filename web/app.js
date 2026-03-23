@@ -337,8 +337,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     
     slot.innerHTML = `
       <div class="slot-name">Any in Underpit?</div>
-      <img class="underpit-icon" src="${teamLogo}" alt="">
-      <div class="slot-value">${isActive ? 'Yes' : 'No'}</div>
+      <div class="underpit-value"><img class="underpit-icon" src="${teamLogo}" alt=""><span>${isActive ? 'Yes' : 'No'}</span></div>
     `;
     
     slot.addEventListener('click', () => toggleSlot(scoreIndex));
