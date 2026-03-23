@@ -323,6 +323,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     // Underpit toggles
     const isActive = score !== 0;
     const isWhiteSlot = index === underpitWhiteIndex;
+    const teamLogo = isWhiteSlot ? 'skyhawks.png' : 'psiclones.png';
     
     slot.classList.add('slot-toggle');
     
@@ -336,6 +337,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     
     slot.innerHTML = `
       <div class="slot-name">Any in Underpit?</div>
+      <img class="underpit-icon" src="${teamLogo}" alt="">
       <div class="slot-value">${isActive ? 'Yes' : 'No'}</div>
     `;
     

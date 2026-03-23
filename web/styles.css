@@ -258,6 +258,11 @@ html, body {
   background: var(--bg-grey);
 }
 
+.underpit-icon {
+  width: 32px;
+  height: 32px;
+}
+
 /* Modal */
 .modal {
   display: none;
