@@ -303,13 +303,17 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     slot.querySelector('.slot-name').addEventListener('click', () => openFactionModal(index));
     
   } else if (index === lithIndex) {
-    // Lith's Favour
+    // Lith's Lair
+    const lithAbsScore = Math.abs(score);
+    const lithMilestone = lithAbsScore >= 8 ? '8' : (lithAbsScore >= 3 ? '3' : '');
+    
     slot.innerHTML = `
-      <div class="slot-name">Lith's Favour</div>
-      <div class="slot-value">${Math.abs(score)}</div>
+      <div class="slot-name">Lith's Lair</div>
+      <div class="slot-value">${lithAbsScore}</div>
+      ${lithMilestone ? `<div class="milestone" title="Lith's Favor">${lithMilestone}</div>` : ''}
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Capture Lith's Favour Adventure for Skyhawks"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Capture Lith's Favour Adventure for Psiclones"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks Offer Tribute to Lith"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones Offer Tribute to Lith"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
