@@ -37,7 +37,8 @@ const DEFAULT_STATE = {
   scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   phase: 5,
   round: 1,
-  endRound: 10
+  endRound: 10,
+  hideUnderpitIcons: false
 };
 
 // Current state
@@ -142,6 +143,13 @@ function setEndRound(endRound) {
 // Set faction count
 function setFactionCount(count) {
   state.factionCount = count;
+  saveState();
+  render();
+}
+
+// Set hide underpit icons
+function setHideUnderpitIcons(hide) {
+  state.hideUnderpitIcons = hide;
   saveState();
   render();
 }
@@ -340,9 +348,10 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       slot.classList.add(isWhiteSlot ? 'slot-white' : 'slot-black');
     }
     
+    const showIcon = !state.hideUnderpitIcons;
     slot.innerHTML = `
       <div class="slot-name">Any in Underpit?</div>
-      <div class="underpit-value"><img class="underpit-icon" src="${teamLogo}" alt=""><span>${isActive ? 'Yes' : 'No'}</span></div>
+      <div class="underpit-value">${showIcon ? `<img class="underpit-icon" src="${teamLogo}" alt="">` : ''}<span>${isActive ? 'Yes' : 'No'}</span></div>
     `;
     
     slot.title = 'Click to toggle';
@@ -463,6 +472,9 @@ function openSettingsModal() {
     factionCountSelect.innerHTML += `<option value="${f}" ${f === state.factionCount ? 'selected' : ''}>${f}</option>`;
   }
   
+  // Set hide underpit icons checkbox
+  document.getElementById('hide-underpit-icons').checked = state.hideUnderpitIcons;
+  
   modal.classList.add('open');
   
   // Close on backdrop click
@@ -506,6 +518,10 @@ function init() {
   
   document.getElementById('faction-count-select').addEventListener('change', (e) => {
     setFactionCount(parseInt(e.target.value));
+  });
+  
+  document.getElementById('hide-underpit-icons').addEventListener('change', (e) => {
+    setHideUnderpitIcons(e.target.checked);
   });
   
   document.getElementById('new-game-btn').addEventListener('click', () => {

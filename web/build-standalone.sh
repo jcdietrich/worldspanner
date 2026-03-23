@@ -71,6 +71,10 @@ $CSS
           <label for="faction-count-select">Factions:</label>
           <select id="faction-count-select"></select>
         </div>
+        <div class="setting-row">
+          <label for="hide-underpit-icons">Hide Underpit Icons:</label>
+          <input type="checkbox" id="hide-underpit-icons">
+        </div>
         <div class="modal-buttons">
           <button id="new-game-btn">New Game</button>
           <button id="close-settings-btn">Close</button>
