@@ -293,12 +293,14 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     const location = getFactionLocation(factionName);
     const absScore = Math.abs(score);
     const milestone = absScore >= 4 ? '4' : (absScore >= 3 ? '3' : '');
+    const isSkyhawksFavor = score < 0; // negative = Skyhawks have favor
+    const milestoneClass = isSkyhawksFavor ? 'milestone milestone-left' : 'milestone';
     
     slot.innerHTML = `
       <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
       <div class="slot-location">${location || '—'}</div>
       <div class="slot-value">${absScore}</div>
-      ${milestone ? `<div class="milestone" title="${milestone} Favor Tile">${milestone}</div>` : ''}
+      ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
       <div class="tow-buttons">
         <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Capture ${factionName} Adventure for Skyhawks"><img src="skyhawks.png" alt="−"></button>
         <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Capture ${factionName} Adventure for Psiclones"><img src="psiclones.png" alt="+"></button>

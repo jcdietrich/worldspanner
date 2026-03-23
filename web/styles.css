@@ -158,6 +158,11 @@ html, body {
   justify-content: center;
 }
 
+.milestone-left {
+  right: auto;
+  left: 20%;
+}
+
 .slot-value {
   font-size: 2rem;
   font-weight: 700;
