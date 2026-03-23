@@ -223,6 +223,10 @@ function renderGrid() {
   const rows = totalSlots / 2;
   gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
   
+  // Add scale class based on row count for text sizing
+  gridEl.classList.remove('grid-4-rows', 'grid-5-rows', 'grid-6-rows');
+  gridEl.classList.add(`grid-${rows}-rows`);
+  
   for (let i = 0; i < totalSlots; i++) {
     const slot = createSlot(i, factionCount, needsBlank, totalSlots);
     gridEl.appendChild(slot);
@@ -258,12 +262,22 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
   const slot = document.createElement('div');
   slot.className = 'slot';
   
+  // Slot layout: factions, Lith, [blank if needed], underpit white, underpit black
   const lithIndex = factionCount;
-  const underpitWhiteIndex = factionCount + 1;
-  const underpitBlackIndex = factionCount + 2;
-  const blankIndex = needsBlank ? totalSlots - 1 : -1;
+  const blankIndex = needsBlank ? factionCount + 1 : -1;
+  const underpitWhiteIndex = needsBlank ? factionCount + 2 : factionCount + 1;
+  const underpitBlackIndex = needsBlank ? factionCount + 3 : factionCount + 2;
   
-  const score = state.scores[index];
+  // Map display index to score index (scores don't include blank)
+  const getScoreIndex = (idx) => {
+    if (idx <= lithIndex) return idx;
+    if (needsBlank && idx === blankIndex) return -1; // blank has no score
+    if (needsBlank) return idx - 1; // shift down by 1 after blank
+    return idx;
+  };
+  
+  const scoreIndex = getScoreIndex(index);
+  const score = scoreIndex >= 0 ? state.scores[scoreIndex] : 0;
   
   if (index < factionCount) {
     // Faction slots
@@ -277,8 +291,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-location">${location || '—'}${milestone ? ` <span class="milestone">${milestone}</span>` : ''}</div>
       <div class="slot-value">${absScore}</div>
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
@@ -293,12 +307,17 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-name">Lith's Favour</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${index}" data-delta="1"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1"><img src="psiclones.png" alt="+"></button>
       </div>
     `;
     
     setSlotBackground(slot, score);
+    
+  } else if (index === blankIndex) {
+    // Blank cell for even grid (before underpit)
+    slot.classList.add('slot-blank');
+    slot.innerHTML = '';
     
   } else if (index === underpitWhiteIndex || index === underpitBlackIndex) {
     // Underpit toggles
@@ -320,12 +339,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-value">${isActive ? 'Yes' : 'No'}</div>
     `;
     
-    slot.addEventListener('click', () => toggleSlot(index));
-    
-  } else if (index === blankIndex) {
-    // Blank cell for even grid
-    slot.classList.add('slot-blank');
-    slot.innerHTML = '';
+    slot.addEventListener('click', () => toggleSlot(scoreIndex));
   }
   
   return slot;
