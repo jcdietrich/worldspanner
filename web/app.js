@@ -33,7 +33,7 @@ const STATE_VERSION = 1;
 const DEFAULT_STATE = {
   version: STATE_VERSION,
   factionCount: 5,
-  factions: ['Lords', 'Warriors', 'Defenders', 'Villains', 'Icons', 'Outcasts', 'Exemplars', 'Adventurers', 'Commoners'],
+  factions: ['', '', '', '', '', '', '', '', ''],
   scores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   phase: 5,
   round: 1,
@@ -73,7 +73,7 @@ function saveState() {
 
 // Reset to new game
 function resetGame() {
-  state = { ...DEFAULT_STATE, factions: [...state.factions], endRound: state.endRound };
+  state = { ...DEFAULT_STATE, factions: ['', '', '', '', '', '', '', '', ''], factionCount: state.factionCount, endRound: state.endRound };
   saveState();
   render();
 }
@@ -267,12 +267,12 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
   
   if (index < factionCount) {
     // Faction slots
-    const factionName = state.factions[index];
+    const factionName = state.factions[index] || 'Unknown';
     const location = getFactionLocation(factionName);
     
     slot.innerHTML = `
       <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
-      <div class="slot-location">${location}</div>
+      <div class="slot-location">${location || '—'}</div>
       <div class="slot-value">${Math.abs(score)}</div>
       <div class="tow-buttons">
         <button class="tow-btn tow-btn-white" data-slot="${index}" data-delta="-1"><img src="skyhawks.png" alt="−"></button>
@@ -373,7 +373,15 @@ function openFactionModal(slotIndex) {
   const modal = document.getElementById('faction-modal');
   const list = document.getElementById('faction-list');
   
-  list.innerHTML = FACTIONS.map(f => `
+  // Get factions already selected in other slots
+  const usedFactions = state.factions
+    .slice(0, state.factionCount)
+    .filter((f, i) => f && i !== slotIndex);
+  
+  // Filter out used factions
+  const availableFactions = FACTIONS.filter(f => !usedFactions.includes(f.name));
+  
+  list.innerHTML = availableFactions.map(f => `
     <div class="faction-option" data-faction="${f.name}">
       <div>${f.name}</div>
       <div class="location">${f.location}</div>
