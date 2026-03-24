@@ -28,7 +28,7 @@ if [ "$HAS_PNGQUANT" = "1" ]; then
   pngquant --quality=65-80 --output "$TMPDIR/lords.png" lords.png 2>/dev/null || cp lords.png "$TMPDIR/lords.png"
   pngquant --quality=65-80 --output "$TMPDIR/warriors.png" warriors.png 2>/dev/null || cp warriors.png "$TMPDIR/warriors.png"
   pngquant --quality=65-80 --output "$TMPDIR/defenders.png" defenders.png 2>/dev/null || cp defenders.png "$TMPDIR/defenders.png"
-  pngquant --quality=65-80 --output "$TMPDIR/villians.png" villians.png 2>/dev/null || cp villians.png "$TMPDIR/villians.png"
+  pngquant --quality=65-80 --output "$TMPDIR/villains.png" villains.png 2>/dev/null || cp villains.png "$TMPDIR/villains.png"
   pngquant --quality=65-80 --output "$TMPDIR/icons.png" icons.png 2>/dev/null || cp icons.png "$TMPDIR/icons.png"
   pngquant --quality=65-80 --output "$TMPDIR/outcasts.png" outcasts.png 2>/dev/null || cp outcasts.png "$TMPDIR/outcasts.png"
   pngquant --quality=65-80 --output "$TMPDIR/exemplars.png" exemplars.png 2>/dev/null || cp exemplars.png "$TMPDIR/exemplars.png"
@@ -38,7 +38,7 @@ if [ "$HAS_PNGQUANT" = "1" ]; then
   LORDS_B64=$(base64 < "$TMPDIR/lords.png" | tr -d '\n')
   WARRIORS_B64=$(base64 < "$TMPDIR/warriors.png" | tr -d '\n')
   DEFENDERS_B64=$(base64 < "$TMPDIR/defenders.png" | tr -d '\n')
-  VILLIANS_B64=$(base64 < "$TMPDIR/villians.png" | tr -d '\n')
+  VILLAINS_B64=$(base64 < "$TMPDIR/villains.png" | tr -d '\n')
   ICONS_B64=$(base64 < "$TMPDIR/icons.png" | tr -d '\n')
   OUTCASTS_B64=$(base64 < "$TMPDIR/outcasts.png" | tr -d '\n')
   EXEMPLARS_B64=$(base64 < "$TMPDIR/exemplars.png" | tr -d '\n')
@@ -49,7 +49,7 @@ else
   LORDS_B64=$(base64 < lords.png | tr -d '\n')
   WARRIORS_B64=$(base64 < warriors.png | tr -d '\n')
   DEFENDERS_B64=$(base64 < defenders.png | tr -d '\n')
-  VILLIANS_B64=$(base64 < villians.png | tr -d '\n')
+  VILLAINS_B64=$(base64 < villains.png | tr -d '\n')
   ICONS_B64=$(base64 < icons.png | tr -d '\n')
   OUTCASTS_B64=$(base64 < outcasts.png | tr -d '\n')
   EXEMPLARS_B64=$(base64 < exemplars.png | tr -d '\n')
@@ -86,7 +86,7 @@ JS_MODIFIED=$(echo "$JS" | \
   sed "s|lords.png|data:image/png;base64,$LORDS_B64|g" | \
   sed "s|warriors.png|data:image/png;base64,$WARRIORS_B64|g" | \
   sed "s|defenders.png|data:image/png;base64,$DEFENDERS_B64|g" | \
-  sed "s|villians.png|data:image/png;base64,$VILLIANS_B64|g" | \
+  sed "s|villains.png|data:image/png;base64,$VILLAINS_B64|g" | \
   sed "s|icons.png|data:image/png;base64,$ICONS_B64|g" | \
   sed "s|outcasts.png|data:image/png;base64,$OUTCASTS_B64|g" | \
   sed "s|exemplars.png|data:image/png;base64,$EXEMPLARS_B64|g" | \

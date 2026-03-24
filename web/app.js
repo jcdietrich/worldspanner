@@ -18,7 +18,7 @@ const FACTIONS = [
   { name: 'Lords', location: 'Crown District', logo: 'lords.png' },
   { name: 'Warriors', location: 'Steel Bastion', logo: 'warriors.png' },
   { name: 'Defenders', location: 'Watchman Keep', logo: 'defenders.png' },
-  { name: 'Villains', location: 'Dreadmark', logo: 'villians.png' },
+  { name: 'Villains', location: 'Dreadmark', logo: 'villains.png' },
   { name: 'Icons', location: 'Celestial Theatre', logo: 'icons.png' },
   { name: 'Outcasts', location: 'Smugglers Den', logo: 'outcasts.png' },
   { name: 'Exemplars', location: 'Hope Hospice', logo: 'exemplars.png' },
