@@ -372,7 +372,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
   } else if (index === blankIndex) {
     // Blank cell for even grid (before underpit)
     slot.classList.add('slot-blank');
-    slot.innerHTML = '';
+    slot.innerHTML = '<img class="amaze-logo" src="amaze.png" alt="">';
     
   } else if (index === underpitWhiteIndex || index === underpitBlackIndex) {
     // Underpit toggles

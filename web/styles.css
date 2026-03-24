@@ -21,6 +21,12 @@
   cursor: default;
 }
 
+.amaze-logo {
+  height: 1.5rem;
+  width: auto;
+  object-fit: contain;
+}
+
 :root {
   --bg-dark: #000;
   --bg-grey: #808080;

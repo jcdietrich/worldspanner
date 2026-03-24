@@ -34,6 +34,8 @@ if [ "$HAS_PNGQUANT" = "1" ]; then
   pngquant --quality=20-40 --speed=1 --output "$TMPDIR/exemplars.png" exemplars.png 2>/dev/null || cp exemplars.png "$TMPDIR/exemplars.png"
   pngquant --quality=20-40 --speed=1 --output "$TMPDIR/adventurers.png" adventurers.png 2>/dev/null || cp adventurers.png "$TMPDIR/adventurers.png"
   pngquant --quality=20-40 --speed=1 --output "$TMPDIR/commoners.png" commoners.png 2>/dev/null || cp commoners.png "$TMPDIR/commoners.png"
+  magick amaze.png -resize 48x48 "$TMPDIR/amaze_resized.png" 2>/dev/null || convert amaze.png -resize 48x48 "$TMPDIR/amaze_resized.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/amaze.png" "$TMPDIR/amaze_resized.png" 2>/dev/null || cp "$TMPDIR/amaze_resized.png" "$TMPDIR/amaze.png"
   LORDS_B64=$(base64 < "$TMPDIR/lords.png" | tr -d '\n')
   WARRIORS_B64=$(base64 < "$TMPDIR/warriors.png" | tr -d '\n')
   DEFENDERS_B64=$(base64 < "$TMPDIR/defenders.png" | tr -d '\n')
@@ -43,6 +45,7 @@ if [ "$HAS_PNGQUANT" = "1" ]; then
   EXEMPLARS_B64=$(base64 < "$TMPDIR/exemplars.png" | tr -d '\n')
   ADVENTURERS_B64=$(base64 < "$TMPDIR/adventurers.png" | tr -d '\n')
   COMMONERS_B64=$(base64 < "$TMPDIR/commoners.png" | tr -d '\n')
+  AMAZE_B64=$(base64 < "$TMPDIR/amaze.png" | tr -d '\n')
 else
   LORDS_B64=$(base64 < lords.png | tr -d '\n')
   WARRIORS_B64=$(base64 < warriors.png | tr -d '\n')
@@ -53,6 +56,7 @@ else
   EXEMPLARS_B64=$(base64 < exemplars.png | tr -d '\n')
   ADVENTURERS_B64=$(base64 < adventurers.png | tr -d '\n')
   COMMONERS_B64=$(base64 < commoners.png | tr -d '\n')
+  AMAZE_B64=$(base64 < amaze.png | tr -d '\n')
 fi
 
 # Base64 encode favicon SVG
@@ -89,7 +93,8 @@ JS_MODIFIED=$(echo "$JS" | \
   sed "s|outcasts.png|data:image/png;base64,$OUTCASTS_B64|g" | \
   sed "s|exemplars.png|data:image/png;base64,$EXEMPLARS_B64|g" | \
   sed "s|adventurers.png|data:image/png;base64,$ADVENTURERS_B64|g" | \
-  sed "s|commoners.png|data:image/png;base64,$COMMONERS_B64|g")
+  sed "s|commoners.png|data:image/png;base64,$COMMONERS_B64|g" | \
+  sed "s|amaze.png|data:image/png;base64,$AMAZE_B64|g")
 
 # Generate standalone HTML
 cat > worldspanner.html << HTMLEOF
