@@ -208,9 +208,9 @@ function renderHeader() {
   if (isMelee) {
     teamIconEl.src = 'melee.png';
   } else if (phase.team === 'white') {
-    teamIconEl.src = 'skyhawks.png';
+    teamIconEl.src = 'skyhawks.svg';
   } else {
-    teamIconEl.src = 'psiclones.png';
+    teamIconEl.src = 'psiclones.svg';
   }
   
   // Set header text color to match active team (background always blue-grey)
@@ -250,7 +250,7 @@ function renderScoreboard() {
   const skyhawksCell = document.createElement('div');
   skyhawksCell.className = 'scoreboard-cell skyhawks';
   skyhawksCell.innerHTML = `
-    <img class="scoreboard-icon" src="skyhawks.png" alt="Skyhawks">
+    <img class="scoreboard-icon" src="skyhawks.svg" alt="Skyhawks">
     <span class="scoreboard-name">Skyhawks</span>
     <span class="scoreboard-score">${scores.white}</span>
   `;
@@ -259,7 +259,7 @@ function renderScoreboard() {
   const psiclonesCell = document.createElement('div');
   psiclonesCell.className = 'scoreboard-cell psiclones';
   psiclonesCell.innerHTML = `
-    <img class="scoreboard-icon" src="psiclones.png" alt="Psiclones">
+    <img class="scoreboard-icon" src="psiclones.svg" alt="Psiclones">
     <span class="scoreboard-name">Psiclones</span>
     <span class="scoreboard-score">${scores.black}</span>
   `;
@@ -302,8 +302,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-value">${absScore}</div>
       ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks capture ${factionName} Adventure"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones capture ${factionName} Adventure"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks capture ${factionName} Adventure"><img src="skyhawks.svg" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones capture ${factionName} Adventure"><img src="psiclones.svg" alt="+"></button>
       </div>
     `;
     
@@ -324,8 +324,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       <div class="slot-value">${lithAbsScore}</div>
       ${lithMilestone ? `<div class="${lithMilestoneClass}" title="Lith's Favor (${lithMilestone})">${lithMilestone}</div>` : ''}
       <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks Offer Tribute to Lith"><img src="skyhawks.png" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones Offer Tribute to Lith"><img src="psiclones.png" alt="+"></button>
+        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks Offer Tribute to Lith"><img src="skyhawks.svg" alt="−"></button>
+        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones Offer Tribute to Lith"><img src="psiclones.svg" alt="+"></button>
       </div>
     `;
     
@@ -340,7 +340,7 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     // Underpit toggles
     const isActive = score !== 0;
     const isWhiteSlot = index === underpitWhiteIndex;
-    const teamLogo = isWhiteSlot ? 'skyhawks.png' : 'psiclones.png';
+    const teamLogo = isWhiteSlot ? 'skyhawks.svg' : 'psiclones.svg';
     
     slot.classList.add('slot-toggle');
     

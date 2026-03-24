@@ -17,19 +17,16 @@ echo "Building standalone HTML..."
 TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT
 
-# Optimize and base64 encode PNGs
+# Base64 encode SVGs for team logos
+SKYHAWKS_B64=$(base64 < skyhawks.svg | tr -d '\n')
+PSICLONES_B64=$(base64 < psiclones.svg | tr -d '\n')
+
+# Optimize and base64 encode melee PNG
 if [ "$HAS_PNGQUANT" = "1" ]; then
-  echo "Optimizing images with pngquant..."
-  pngquant --quality=65-80 --output "$TMPDIR/skyhawks.png" skyhawks.png 2>/dev/null || cp skyhawks.png "$TMPDIR/skyhawks.png"
-  pngquant --quality=65-80 --output "$TMPDIR/psiclones.png" psiclones.png 2>/dev/null || cp psiclones.png "$TMPDIR/psiclones.png"
+  echo "Optimizing melee image with pngquant..."
   pngquant --quality=65-80 --output "$TMPDIR/melee.png" melee.png 2>/dev/null || cp melee.png "$TMPDIR/melee.png"
-  SKYHAWKS_B64=$(base64 < "$TMPDIR/skyhawks.png" | tr -d '\n')
-  PSICLONES_B64=$(base64 < "$TMPDIR/psiclones.png" | tr -d '\n')
   MELEE_B64=$(base64 < "$TMPDIR/melee.png" | tr -d '\n')
 else
-  echo "pngquant not found, skipping image optimization"
-  SKYHAWKS_B64=$(base64 < skyhawks.png | tr -d '\n')
-  PSICLONES_B64=$(base64 < psiclones.png | tr -d '\n')
   MELEE_B64=$(base64 < melee.png | tr -d '\n')
 fi
 
@@ -55,7 +52,7 @@ else
 fi
 
 # Update JS to use data URIs for images
-JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.png|data:image/png;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.png|data:image/png;base64,$PSICLONES_B64|g" | sed "s|melee.png|data:image/png;base64,$MELEE_B64|g")
+JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.svg|data:image/svg+xml;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.svg|data:image/svg+xml;base64,$PSICLONES_B64|g" | sed "s|melee.png|data:image/png;base64,$MELEE_B64|g")
 
 # Generate standalone HTML
 cat > worldspanner.html << HTMLEOF
@@ -79,7 +76,7 @@ $CSS
 
     <header class="header" id="header">
       <div class="header-clickable" id="header-clickable" title="Click to advance phase">
-        <img class="team-icon" id="team-icon" src="data:image/png;base64,$SKYHAWKS_B64" alt="Team">
+        <img class="team-icon" id="team-icon" src="data:image/svg+xml;base64,$SKYHAWKS_B64" alt="Team">
         <span class="phase-name" id="phase-name">Reinforce</span>
         <span class="round-display" id="round-display">1/10</span>
       </div>
