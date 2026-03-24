@@ -220,7 +220,7 @@ function renderHeader() {
   
   // Set team icon - melee uses hybrid logo
   if (isMelee) {
-    teamIconEl.src = 'melee.png';
+    teamIconEl.src = 'melee.svg';
   } else if (phase.team === 'white') {
     teamIconEl.src = 'skyhawks.svg';
   } else {
