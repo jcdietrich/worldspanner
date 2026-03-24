@@ -7,11 +7,16 @@
 .slot-name,
 .slot-location,
 .faction-header,
-.faction-logo {
+.faction-logo,
+.tow-btn,
+.faction-option {
   cursor: pointer;
 }
 
-.slot-value {
+.slot-value,
+.scoreboard-cell,
+.scoreboard-name,
+.scoreboard-score {
   cursor: default;
 }
 
