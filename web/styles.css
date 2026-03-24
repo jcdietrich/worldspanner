@@ -161,8 +161,22 @@ html, body {
   text-align: left;
 }
 
-.faction-info .slot-name,
+.faction-info .slot-name {
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.faction-info .slot-name .dropdown-arrow {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.faction-header:hover .faction-info .slot-name .dropdown-arrow {
+  opacity: 1;
+}
+
 .faction-info .slot-location {
+  font-size: 0.6rem;
   text-align: left;
 }
 

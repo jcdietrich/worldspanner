@@ -24,16 +24,16 @@ PSICLONES_B64=$(base64 < psiclones.svg | tr -d '\n')
 # Optimize and base64 encode PNGs
 if [ "$HAS_PNGQUANT" = "1" ]; then
   echo "Optimizing PNG images with pngquant..."
-  pngquant --quality=65-80 --output "$TMPDIR/melee.png" melee.png 2>/dev/null || cp melee.png "$TMPDIR/melee.png"
-  pngquant --quality=65-80 --output "$TMPDIR/lords.png" lords.png 2>/dev/null || cp lords.png "$TMPDIR/lords.png"
-  pngquant --quality=65-80 --output "$TMPDIR/warriors.png" warriors.png 2>/dev/null || cp warriors.png "$TMPDIR/warriors.png"
-  pngquant --quality=65-80 --output "$TMPDIR/defenders.png" defenders.png 2>/dev/null || cp defenders.png "$TMPDIR/defenders.png"
-  pngquant --quality=65-80 --output "$TMPDIR/villains.png" villains.png 2>/dev/null || cp villains.png "$TMPDIR/villains.png"
-  pngquant --quality=65-80 --output "$TMPDIR/icons.png" icons.png 2>/dev/null || cp icons.png "$TMPDIR/icons.png"
-  pngquant --quality=65-80 --output "$TMPDIR/outcasts.png" outcasts.png 2>/dev/null || cp outcasts.png "$TMPDIR/outcasts.png"
-  pngquant --quality=65-80 --output "$TMPDIR/exemplars.png" exemplars.png 2>/dev/null || cp exemplars.png "$TMPDIR/exemplars.png"
-  pngquant --quality=65-80 --output "$TMPDIR/adventurers.png" adventurers.png 2>/dev/null || cp adventurers.png "$TMPDIR/adventurers.png"
-  pngquant --quality=65-80 --output "$TMPDIR/commoners.png" commoners.png 2>/dev/null || cp commoners.png "$TMPDIR/commoners.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/melee.png" melee.png 2>/dev/null || cp melee.png "$TMPDIR/melee.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/lords.png" lords.png 2>/dev/null || cp lords.png "$TMPDIR/lords.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/warriors.png" warriors.png 2>/dev/null || cp warriors.png "$TMPDIR/warriors.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/defenders.png" defenders.png 2>/dev/null || cp defenders.png "$TMPDIR/defenders.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/villains.png" villains.png 2>/dev/null || cp villains.png "$TMPDIR/villains.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/icons.png" icons.png 2>/dev/null || cp icons.png "$TMPDIR/icons.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/outcasts.png" outcasts.png 2>/dev/null || cp outcasts.png "$TMPDIR/outcasts.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/exemplars.png" exemplars.png 2>/dev/null || cp exemplars.png "$TMPDIR/exemplars.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/adventurers.png" adventurers.png 2>/dev/null || cp adventurers.png "$TMPDIR/adventurers.png"
+  pngquant --quality=20-40 --speed=1 --output "$TMPDIR/commoners.png" commoners.png 2>/dev/null || cp commoners.png "$TMPDIR/commoners.png"
   MELEE_B64=$(base64 < "$TMPDIR/melee.png" | tr -d '\n')
   LORDS_B64=$(base64 < "$TMPDIR/lords.png" | tr -d '\n')
   WARRIORS_B64=$(base64 < "$TMPDIR/warriors.png" | tr -d '\n')
