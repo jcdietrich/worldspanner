@@ -166,6 +166,20 @@ html, body {
   text-align: left;
 }
 
+.faction-header:not(:has(.faction-logo)) {
+  justify-content: center;
+}
+
+.faction-header:not(:has(.faction-logo)) .faction-info {
+  align-items: center;
+  text-align: center;
+}
+
+.faction-header:not(:has(.faction-logo)) .slot-name,
+.faction-header:not(:has(.faction-logo)) .slot-location {
+  text-align: center;
+}
+
 .milestone {
   position: absolute;
   bottom: 8px;

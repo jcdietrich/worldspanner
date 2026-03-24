@@ -314,8 +314,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     
     if (showLogo) {
       slot.innerHTML = `
-        <div class="faction-header">
-          <img class="faction-logo" src="${logo}" alt="" title="Click to change faction">
+        <div class="faction-header" title="Click to change faction">
+          <img class="faction-logo" src="${logo}" alt="">
           <div class="faction-info">
             <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
             <div class="slot-location">${location || '—'}</div>
@@ -330,8 +330,12 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
       `;
     } else {
       slot.innerHTML = `
-        <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
-        <div class="slot-location">${location || '—'}</div>
+        <div class="faction-header" title="Click to change faction">
+          <div class="faction-info">
+            <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
+            <div class="slot-location">${location || '—'}</div>
+          </div>
+        </div>
         <div class="slot-value">${absScore}</div>
         ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
         <div class="tow-buttons">
@@ -343,12 +347,8 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     
     setSlotBackground(slot, score);
     
-    // Click handler for faction selection - on logo if shown, otherwise on name
-    if (showLogo) {
-      slot.querySelector('.faction-logo').addEventListener('click', () => openFactionModal(index));
-    } else {
-      slot.querySelector('.slot-name').addEventListener('click', () => openFactionModal(index));
-    }
+    // Click handler for faction selection - on entire faction header
+    slot.querySelector('.faction-header').addEventListener('click', () => openFactionModal(index));
     
   } else if (index === lithIndex) {
     // Lith's Lair
