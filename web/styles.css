@@ -11,6 +11,10 @@
   cursor: pointer;
 }
 
+.slot-value {
+  cursor: default;
+}
+
 :root {
   --bg-dark: #000;
   --bg-grey: #808080;
