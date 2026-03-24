@@ -145,6 +145,10 @@ $CSS
           <label for="hide-underpit-icons">Hide Underpit Icons:</label>
           <input type="checkbox" id="hide-underpit-icons">
         </div>
+        <div class="setting-row">
+          <label for="hide-faction-logos">Hide Faction Logos:</label>
+          <input type="checkbox" id="hide-faction-logos">
+        </div>
         <div class="modal-buttons">
           <button id="new-game-btn">New Game</button>
           <button id="close-settings-btn">Close</button>

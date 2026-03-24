@@ -38,7 +38,8 @@ const DEFAULT_STATE = {
   phase: 5,
   round: 1,
   endRound: 10,
-  hideUnderpitIcons: false
+  hideUnderpitIcons: false,
+  hideFactionLogos: false
 };
 
 // Current state
@@ -156,6 +157,13 @@ function setFactionCount(count) {
 // Set hide underpit icons
 function setHideUnderpitIcons(hide) {
   state.hideUnderpitIcons = hide;
+  saveState();
+  render();
+}
+
+// Set hide faction logos
+function setHideFactionLogos(hide) {
+  state.hideFactionLogos = hide;
   saveState();
   render();
 }
@@ -302,27 +310,45 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     const milestone = absScore >= 4 ? '4' : (absScore >= 3 ? '3' : '');
     const isSkyhawksFavor = score < 0; // negative = Skyhawks have favor
     const milestoneClass = isSkyhawksFavor ? 'milestone milestone-left' : 'milestone';
+    const showLogo = !state.hideFactionLogos && logo;
     
-    slot.innerHTML = `
-      <div class="faction-header">
-        ${logo ? `<img class="faction-logo" src="${logo}" alt="">` : ''}
-        <div class="faction-info">
-          <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
-          <div class="slot-location">${location || '—'}</div>
+    if (showLogo) {
+      slot.innerHTML = `
+        <div class="faction-header">
+          <img class="faction-logo" src="${logo}" alt="" title="Click to change faction">
+          <div class="faction-info">
+            <div class="slot-name">${factionName} <span class="dropdown-arrow">▼</span></div>
+            <div class="slot-location">${location || '—'}</div>
+          </div>
         </div>
-      </div>
-      <div class="slot-value">${absScore}</div>
-      ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
-      <div class="tow-buttons">
-        <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks capture ${factionName} Adventure"><img src="skyhawks.svg" alt="−"></button>
-        <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones capture ${factionName} Adventure"><img src="psiclones.svg" alt="+"></button>
-      </div>
-    `;
+        <div class="slot-value">${absScore}</div>
+        ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
+        <div class="tow-buttons">
+          <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks capture ${factionName} Adventure"><img src="skyhawks.svg" alt="−"></button>
+          <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones capture ${factionName} Adventure"><img src="psiclones.svg" alt="+"></button>
+        </div>
+      `;
+    } else {
+      slot.innerHTML = `
+        <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
+        <div class="slot-location">${location || '—'}</div>
+        <div class="slot-value">${absScore}</div>
+        ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
+        <div class="tow-buttons">
+          <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks capture ${factionName} Adventure"><img src="skyhawks.svg" alt="−"></button>
+          <button class="tow-btn tow-btn-black" data-slot="${scoreIndex}" data-delta="1" title="Psiclones capture ${factionName} Adventure"><img src="psiclones.svg" alt="+"></button>
+        </div>
+      `;
+    }
     
     setSlotBackground(slot, score);
     
-    // Faction name click handler
-    slot.querySelector('.slot-name').addEventListener('click', () => openFactionModal(index));
+    // Click handler for faction selection - on logo if shown, otherwise on name
+    if (showLogo) {
+      slot.querySelector('.faction-logo').addEventListener('click', () => openFactionModal(index));
+    } else {
+      slot.querySelector('.slot-name').addEventListener('click', () => openFactionModal(index));
+    }
     
   } else if (index === lithIndex) {
     // Lith's Lair
@@ -431,8 +457,11 @@ function openFactionModal(slotIndex) {
   
   list.innerHTML = availableFactions.map(f => `
     <div class="faction-option" data-faction="${f.name}">
-      <div>${f.name}</div>
-      <div class="location">${f.location}</div>
+      <img class="faction-option-logo" src="${f.logo}" alt="">
+      <div class="faction-option-info">
+        <div>${f.name}</div>
+        <div class="location">${f.location}</div>
+      </div>
     </div>
   `).join('');
   
@@ -491,6 +520,9 @@ function openSettingsModal() {
   // Set hide underpit icons checkbox
   document.getElementById('hide-underpit-icons').checked = state.hideUnderpitIcons;
   
+  // Set hide faction logos checkbox
+  document.getElementById('hide-faction-logos').checked = state.hideFactionLogos;
+  
   modal.classList.add('open');
   
   // Close on backdrop click
@@ -538,6 +570,10 @@ function init() {
   
   document.getElementById('hide-underpit-icons').addEventListener('change', (e) => {
     setHideUnderpitIcons(e.target.checked);
+  });
+  
+  document.getElementById('hide-faction-logos').addEventListener('change', (e) => {
+    setHideFactionLogos(e.target.checked);
   });
   
   document.getElementById('new-game-btn').addEventListener('click', () => {
