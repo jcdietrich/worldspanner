@@ -15,15 +15,15 @@ const PHASES = [
 ];
 
 const FACTIONS = [
-  { name: 'Lords', location: 'Crown District' },
-  { name: 'Warriors', location: 'Steel Bastion' },
-  { name: 'Defenders', location: 'Watchman Keep' },
-  { name: 'Villains', location: 'Dreadmark' },
-  { name: 'Icons', location: 'Celestial Theatre' },
-  { name: 'Outcasts', location: 'Smugglers Den' },
-  { name: 'Exemplars', location: 'Hope Hospice' },
-  { name: 'Adventurers', location: 'Lostlight Society' },
-  { name: 'Commoners', location: 'Green Vale' }
+  { name: 'Lords', location: 'Crown District', logo: 'lords.png' },
+  { name: 'Warriors', location: 'Steel Bastion', logo: 'warriors.png' },
+  { name: 'Defenders', location: 'Watchman Keep', logo: 'defenders.png' },
+  { name: 'Villains', location: 'Dreadmark', logo: 'villians.png' },
+  { name: 'Icons', location: 'Celestial Theatre', logo: 'icons.png' },
+  { name: 'Outcasts', location: 'Smugglers Den', logo: 'outcasts.png' },
+  { name: 'Exemplars', location: 'Hope Hospice', logo: 'exemplars.png' },
+  { name: 'Adventurers', location: 'Lostlight Society', logo: 'adventurers.png' },
+  { name: 'Commoners', location: 'Green Vale', logo: 'commoners.png' }
 ];
 
 const STORAGE_KEY = 'worldspanner_state';
@@ -83,6 +83,12 @@ function resetGame() {
 function getFactionLocation(name) {
   const faction = FACTIONS.find(f => f.name === name);
   return faction ? faction.location : '';
+}
+
+// Get faction logo by name
+function getFactionLogo(name) {
+  const faction = FACTIONS.find(f => f.name === name);
+  return faction ? faction.logo : '';
 }
 
 // Get phase team color (white or black text)
@@ -291,14 +297,20 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     // Faction slots
     const factionName = state.factions[index] || 'Unknown';
     const location = getFactionLocation(factionName);
+    const logo = getFactionLogo(factionName);
     const absScore = Math.abs(score);
     const milestone = absScore >= 4 ? '4' : (absScore >= 3 ? '3' : '');
     const isSkyhawksFavor = score < 0; // negative = Skyhawks have favor
     const milestoneClass = isSkyhawksFavor ? 'milestone milestone-left' : 'milestone';
     
     slot.innerHTML = `
-      <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
-      <div class="slot-location">${location || '—'}</div>
+      <div class="faction-header">
+        ${logo ? `<img class="faction-logo" src="${logo}" alt="">` : ''}
+        <div class="faction-info">
+          <div class="slot-name" title="Click to change faction">${factionName} <span class="dropdown-arrow">▼</span></div>
+          <div class="slot-location">${location || '—'}</div>
+        </div>
+      </div>
       <div class="slot-value">${absScore}</div>
       ${milestone ? `<div class="${milestoneClass}" title="${factionName}'s Favor (${milestone})">${milestone}</div>` : ''}
       <div class="tow-buttons">

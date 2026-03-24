@@ -21,13 +21,40 @@ trap "rm -rf $TMPDIR" EXIT
 SKYHAWKS_B64=$(base64 < skyhawks.svg | tr -d '\n')
 PSICLONES_B64=$(base64 < psiclones.svg | tr -d '\n')
 
-# Optimize and base64 encode melee PNG
+# Optimize and base64 encode PNGs
 if [ "$HAS_PNGQUANT" = "1" ]; then
-  echo "Optimizing melee image with pngquant..."
+  echo "Optimizing PNG images with pngquant..."
   pngquant --quality=65-80 --output "$TMPDIR/melee.png" melee.png 2>/dev/null || cp melee.png "$TMPDIR/melee.png"
+  pngquant --quality=65-80 --output "$TMPDIR/lords.png" lords.png 2>/dev/null || cp lords.png "$TMPDIR/lords.png"
+  pngquant --quality=65-80 --output "$TMPDIR/warriors.png" warriors.png 2>/dev/null || cp warriors.png "$TMPDIR/warriors.png"
+  pngquant --quality=65-80 --output "$TMPDIR/defenders.png" defenders.png 2>/dev/null || cp defenders.png "$TMPDIR/defenders.png"
+  pngquant --quality=65-80 --output "$TMPDIR/villians.png" villians.png 2>/dev/null || cp villians.png "$TMPDIR/villians.png"
+  pngquant --quality=65-80 --output "$TMPDIR/icons.png" icons.png 2>/dev/null || cp icons.png "$TMPDIR/icons.png"
+  pngquant --quality=65-80 --output "$TMPDIR/outcasts.png" outcasts.png 2>/dev/null || cp outcasts.png "$TMPDIR/outcasts.png"
+  pngquant --quality=65-80 --output "$TMPDIR/exemplars.png" exemplars.png 2>/dev/null || cp exemplars.png "$TMPDIR/exemplars.png"
+  pngquant --quality=65-80 --output "$TMPDIR/adventurers.png" adventurers.png 2>/dev/null || cp adventurers.png "$TMPDIR/adventurers.png"
+  pngquant --quality=65-80 --output "$TMPDIR/commoners.png" commoners.png 2>/dev/null || cp commoners.png "$TMPDIR/commoners.png"
   MELEE_B64=$(base64 < "$TMPDIR/melee.png" | tr -d '\n')
+  LORDS_B64=$(base64 < "$TMPDIR/lords.png" | tr -d '\n')
+  WARRIORS_B64=$(base64 < "$TMPDIR/warriors.png" | tr -d '\n')
+  DEFENDERS_B64=$(base64 < "$TMPDIR/defenders.png" | tr -d '\n')
+  VILLIANS_B64=$(base64 < "$TMPDIR/villians.png" | tr -d '\n')
+  ICONS_B64=$(base64 < "$TMPDIR/icons.png" | tr -d '\n')
+  OUTCASTS_B64=$(base64 < "$TMPDIR/outcasts.png" | tr -d '\n')
+  EXEMPLARS_B64=$(base64 < "$TMPDIR/exemplars.png" | tr -d '\n')
+  ADVENTURERS_B64=$(base64 < "$TMPDIR/adventurers.png" | tr -d '\n')
+  COMMONERS_B64=$(base64 < "$TMPDIR/commoners.png" | tr -d '\n')
 else
   MELEE_B64=$(base64 < melee.png | tr -d '\n')
+  LORDS_B64=$(base64 < lords.png | tr -d '\n')
+  WARRIORS_B64=$(base64 < warriors.png | tr -d '\n')
+  DEFENDERS_B64=$(base64 < defenders.png | tr -d '\n')
+  VILLIANS_B64=$(base64 < villians.png | tr -d '\n')
+  ICONS_B64=$(base64 < icons.png | tr -d '\n')
+  OUTCASTS_B64=$(base64 < outcasts.png | tr -d '\n')
+  EXEMPLARS_B64=$(base64 < exemplars.png | tr -d '\n')
+  ADVENTURERS_B64=$(base64 < adventurers.png | tr -d '\n')
+  COMMONERS_B64=$(base64 < commoners.png | tr -d '\n')
 fi
 
 # Base64 encode favicon SVG
@@ -52,7 +79,19 @@ else
 fi
 
 # Update JS to use data URIs for images
-JS_MODIFIED=$(echo "$JS" | sed "s|skyhawks.svg|data:image/svg+xml;base64,$SKYHAWKS_B64|g" | sed "s|psiclones.svg|data:image/svg+xml;base64,$PSICLONES_B64|g" | sed "s|melee.png|data:image/png;base64,$MELEE_B64|g")
+JS_MODIFIED=$(echo "$JS" | \
+  sed "s|skyhawks.svg|data:image/svg+xml;base64,$SKYHAWKS_B64|g" | \
+  sed "s|psiclones.svg|data:image/svg+xml;base64,$PSICLONES_B64|g" | \
+  sed "s|melee.png|data:image/png;base64,$MELEE_B64|g" | \
+  sed "s|lords.png|data:image/png;base64,$LORDS_B64|g" | \
+  sed "s|warriors.png|data:image/png;base64,$WARRIORS_B64|g" | \
+  sed "s|defenders.png|data:image/png;base64,$DEFENDERS_B64|g" | \
+  sed "s|villians.png|data:image/png;base64,$VILLIANS_B64|g" | \
+  sed "s|icons.png|data:image/png;base64,$ICONS_B64|g" | \
+  sed "s|outcasts.png|data:image/png;base64,$OUTCASTS_B64|g" | \
+  sed "s|exemplars.png|data:image/png;base64,$EXEMPLARS_B64|g" | \
+  sed "s|adventurers.png|data:image/png;base64,$ADVENTURERS_B64|g" | \
+  sed "s|commoners.png|data:image/png;base64,$COMMONERS_B64|g")
 
 # Generate standalone HTML
 cat > worldspanner.html << HTMLEOF
