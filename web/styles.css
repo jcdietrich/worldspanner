@@ -2,11 +2,10 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  cursor: pointer;
 }
 
-input, select, textarea {
-  cursor: auto;
+.slot-value {
+  cursor: pointer;
 }
 
 :root {
