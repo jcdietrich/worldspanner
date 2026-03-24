@@ -16,7 +16,8 @@
 .slot-value,
 .scoreboard-cell,
 .scoreboard-name,
-.scoreboard-score {
+.scoreboard-score,
+.milestone {
   cursor: default;
 }
 
