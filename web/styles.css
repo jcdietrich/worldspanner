@@ -167,12 +167,7 @@ html, body {
 }
 
 .faction-info .slot-name .dropdown-arrow {
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-.faction-header:hover .faction-info .slot-name .dropdown-arrow {
-  opacity: 1;
+  display: none;
 }
 
 .faction-info .slot-location {
