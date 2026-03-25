@@ -144,6 +144,11 @@ html, body {
   min-height: 80px;
 }
 
+.slot:has(.faction-logo) {
+  align-items: flex-start;
+  padding-left: 8px;
+}
+
 .slot-name {
   font-size: 0.9rem;
   font-weight: 500;
