@@ -146,7 +146,7 @@ html, body {
 
 .slot:has(.faction-logo) .faction-header {
   align-self: flex-start;
-  margin-left: 40px;
+  margin-left: 45px;
 }
 
 .slot-name {
