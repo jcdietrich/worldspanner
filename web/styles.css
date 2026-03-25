@@ -27,24 +27,6 @@
   object-fit: contain;
 }
 
-.lith-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.lith-logo {
-  height: 2rem;
-  width: auto;
-  object-fit: contain;
-}
-
-.lith-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 :root {
   --bg-dark: #000;
   --bg-grey: #808080;
