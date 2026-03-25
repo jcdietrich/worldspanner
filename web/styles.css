@@ -17,7 +17,9 @@
 .scoreboard-cell,
 .scoreboard-name,
 .scoreboard-score,
-.milestone {
+.milestone,
+.faction-info .slot-name,
+.faction-info .slot-location {
   cursor: default;
 }
 
