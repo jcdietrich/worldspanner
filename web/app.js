@@ -358,8 +358,13 @@ function createSlot(index, factionCount, needsBlank, totalSlots) {
     const lithMilestoneClass = isLithSkyhawksFavor ? 'milestone milestone-left' : 'milestone';
     
     slot.innerHTML = `
-      <div class="slot-name">Lith's Lair</div>
-      <div class="slot-value">${lithAbsScore}</div>
+      <div class="lith-header">
+        <img class="lith-logo" src="lith.svg" alt="">
+        <div class="lith-info">
+          <div class="slot-name">Lith's Lair</div>
+          <div class="slot-value">${lithAbsScore}</div>
+        </div>
+      </div>
       ${lithMilestone ? `<div class="${lithMilestoneClass}" title="Lith's Favor (${lithMilestone})">${lithMilestone}</div>` : ''}
       <div class="tow-buttons">
         <button class="tow-btn tow-btn-white" data-slot="${scoreIndex}" data-delta="-1" title="Skyhawks Offer Tribute to Lith"><img src="skyhawks.svg" alt="−"></button>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="12.7mm" height="12.7002mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 57.31 57.31"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#2B2A29;stroke-width:0.34;stroke-miterlimit:2.61313}
+    .fil9 {fill:none}
+    .fil4 {fill:#737372}
+    .fil6 {fill:#2B2A29}
+    .fil1 {fill:#2B2A29}
+    .fil12 {fill:#DF921D}
+    .fil5 {fill:#4B444D}
+    .fil11 {fill:#7A5527}
+    .fil0 {fill:#60235F}
+    .fil2 {fill:#FEFEFE;fill-rule:nonzero}
+    .fil7 {fill:#737372;fill-rule:nonzero}
+    .fil8 {fill:#4A4143;fill-rule:nonzero}
+    .fil3 {fill:#662540;fill-rule:nonzero}
+    .fil10 {fill:url(#id1)}
+   ]]>
+  </style>
+      <clipPath id="id0">
+       <path d="M28.41 33.93l12.05 8.34c1.26,0.02 2.43,-0.04 3.69,-0.02 -0.75,-3.43 0.76,-5.84 4.07,-7.41l-4.62 -8.2 -15.19 7.29z"/>
+      </clipPath>
+  <radialGradient id="id1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.4608 -0 0.0780143 1.15602 -19 -4)" cx="37.43" cy="28.76" r="9.73" fx="37.43" fy="28.76">
+   <stop offset="0" style="stop-opacity:1; stop-color:#918A06"/>
+   <stop offset="0.478431" style="stop-opacity:1; stop-color:#C2B803"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#F3E500"/>
+  </radialGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1896105313104">
+   <circle class="fil0" cx="28.66" cy="28.66" r="28.66"/>
+   <g>
+    <g>
+     <circle class="fil1 str0" transform="matrix(0.709668 -0 0.0626219 0.61069 30.4082 26.6536)" r="32.24"/>
+     <g>
+      <path class="fil2" d="M17.22 10.53c1.09,4.38 -2.28,7.93 -7.53,7.93 1.32,5.29 2.63,10.57 3.95,15.86 5.25,0 10.38,3.55 11.47,7.93 6.33,0 12.67,0 19,0 -1.09,-4.38 2.28,-7.93 7.53,-7.93 -1.32,-5.29 -2.63,-10.57 -3.95,-15.86 -5.25,0 -10.38,-3.55 -11.47,-7.93 -6.33,0 -12.67,0 -19,0z"/>
+      <path class="fil3" d="M19.96 12.95c0.87,3.49 -1.82,6.32 -6,6.32 1.05,4.21 2.1,8.42 3.14,12.63 4.18,0 8.27,2.83 9.14,6.32 5.05,0 10.09,0 15.14,0 -0.87,-3.49 1.82,-6.32 6,-6.32 -1.05,-4.21 -2.1,-8.42 -3.14,-12.63 -4.18,0 -8.27,-2.83 -9.14,-6.32 -5.05,0 -10.09,0 -15.14,0z"/>
+     </g>
+     <g style="clip-path:url(#id0)">
+      <polygon class="fil4" points="-86.21,-87.98 162.84,-87.98 162.84,156.9 -86.21,156.9 "/>
+      <g id="Layer_x0020_1_0">
+       <metadata id="CorelCorpID_1Corel-Layer"/>
+       <g>
+        <path id="_1" class="fil5" d="M28.66 57.31c15.78,0 28.66,-12.87 28.66,-28.66 0,-15.78 -12.87,-28.66 -28.66,-28.66 -15.78,0 -28.66,12.87 -28.66,28.66 0,15.78 12.87,28.66 28.66,28.66z"/>
+        <g>
+         <g>
+          <path class="fil6 str0" d="M32.43 46.34c12.6,0 21.97,-8.84 20.86,-19.69 -1.11,-10.84 -12.3,-19.69 -24.9,-19.69 -12.6,0 -21.97,8.84 -20.86,19.69 1.11,10.84 12.3,19.69 24.9,19.69z"/>
+          <g>
+           <path class="fil7" d="M17.22 10.53c1.09,4.38 -2.28,7.93 -7.53,7.93 1.32,5.29 2.63,10.57 3.95,15.86 5.25,0 10.38,3.55 11.47,7.93 6.33,0 12.67,0 19,0 -1.09,-4.38 2.28,-7.93 7.53,-7.93 -1.32,-5.29 -2.63,-10.57 -3.95,-15.86 -5.25,0 -10.38,-3.55 -11.47,-7.93 -6.33,0 -12.67,0 -19,0z"/>
+           <path class="fil8" d="M19.96 12.95c0.87,3.49 -1.82,6.32 -6,6.32 1.05,4.21 2.1,8.42 3.14,12.63 4.18,0 8.27,2.83 9.14,6.32 5.05,0 10.09,0 15.14,0 -0.87,-3.49 1.82,-6.32 6,-6.32 -1.05,-4.21 -2.1,-8.42 -3.14,-12.63 -4.18,0 -8.27,-2.83 -9.14,-6.32 -5.05,0 -10.09,0 -15.14,0z"/>
+          </g>
+         </g>
+        </g>
+       </g>
+      </g>
+     </g>
+     <path class="fil9" d="M28.41 33.93l12.05 8.34c1.26,0.02 2.43,-0.04 3.69,-0.02 -0.75,-3.43 0.76,-5.84 4.07,-7.41l-4.62 -8.2 -15.19 7.29z"/>
+     <path class="fil10" d="M31.26 13.76c6.54,0 12.16,4.66 12.55,10.42 0.39,5.75 -4.6,10.42 -11.15,10.42 -6.54,0 -12.16,-4.66 -12.55,-10.42 -0.39,-5.75 4.6,-10.42 11.15,-10.42z"/>
+     <ellipse class="fil11" transform="matrix(0.618428 -0 0.0730615 0.609467 31.9701 19.4086)" rx="15.92" ry="8.9"/>
+     <path class="fil12" d="M30.72 13.33c6.11,0 11.64,2.74 12.36,6.11 0.72,3.37 -3.65,6.11 -9.75,6.11 -6.11,0 -11.64,-2.74 -12.36,-6.11 -0.72,-3.37 3.65,-6.11 9.75,-6.11zm0.23 1.09c5.02,0 9.56,2.25 10.16,5.02 0.59,2.77 -3,5.02 -8.01,5.02 -5.02,0 -9.56,-2.25 -10.15,-5.02 -0.59,-2.77 3,-5.02 8.01,-5.02z"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

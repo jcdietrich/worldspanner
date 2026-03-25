@@ -21,6 +21,7 @@ trap "rm -rf $TMPDIR" EXIT
 SKYHAWKS_B64=$(base64 < skyhawks.svg | tr -d '\n')
 PSICLONES_B64=$(base64 < psiclones.svg | tr -d '\n')
 MELEE_B64=$(base64 < melee.svg | tr -d '\n')
+LITH_B64=$(base64 < lith.svg | tr -d '\n')
 
 # Optimize and base64 encode PNGs
 if [ "$HAS_PNGQUANT" = "1" ]; then
@@ -85,6 +86,7 @@ JS_MODIFIED=$(echo "$JS" | \
   sed "s|skyhawks.svg|data:image/svg+xml;base64,$SKYHAWKS_B64|g" | \
   sed "s|psiclones.svg|data:image/svg+xml;base64,$PSICLONES_B64|g" | \
   sed "s|melee.svg|data:image/svg+xml;base64,$MELEE_B64|g" | \
+  sed "s|lith.svg|data:image/svg+xml;base64,$LITH_B64|g" | \
   sed "s|lords.png|data:image/png;base64,$LORDS_B64|g" | \
   sed "s|warriors.png|data:image/png;base64,$WARRIORS_B64|g" | \
   sed "s|defenders.png|data:image/png;base64,$DEFENDERS_B64|g" | \
