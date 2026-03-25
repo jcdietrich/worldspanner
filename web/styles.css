@@ -144,9 +144,9 @@ html, body {
   min-height: 80px;
 }
 
-.slot:has(.faction-logo) {
-  align-items: flex-start;
-  padding-left: 8px;
+.slot:has(.faction-logo) .faction-header {
+  align-self: flex-start;
+  margin-left: 8px;
 }
 
 .slot-name {
