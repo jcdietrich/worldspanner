@@ -19,7 +19,8 @@
 .scoreboard-score,
 .milestone,
 .faction-info .slot-name,
-.faction-info .slot-location {
+.faction-info .slot-location,
+.faction-header .faction-logo[src*="lith"] {
   cursor: default;
 }
 
