@@ -170,6 +170,41 @@ function setHideFactionLogos(hide) {
   render();
 }
 
+// Set current view
+function setCurrentView(view) {
+  state.currentView = view;
+  saveState();
+  render();
+}
+
+// Open map view
+function openMapView() {
+  // Auto-fill unknown factions if any
+  if (state.factionCount === 5) {
+    const usedFactions = state.factions.slice(0, 5).filter(f => f !== '');
+    const availableFactions = FACTIONS.map(f => f.name).filter(f => !usedFactions.includes(f));
+    
+    for (let i = 0; i < 5; i++) {
+      if (state.factions[i] === '') {
+        const randomIndex = Math.floor(Math.random() * availableFactions.length);
+        state.factions[i] = availableFactions.splice(randomIndex, 1)[0];
+      }
+    }
+    
+    // Initialize map state if not exists
+    if (!state.mapState) {
+      initializeMapState();
+    }
+  }
+  
+  setCurrentView('map');
+}
+
+// Close map view
+function closeMapView() {
+  setCurrentView('scoreboard');
+}
+
 // Adjust tug-of-war score (factions + Lith's Favour)
 function adjustScore(slotIndex, delta) {
   const maxTowIndex = state.factionCount; // factions (0 to factionCount-1) + Lith (factionCount)
