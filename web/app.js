@@ -228,7 +228,7 @@ function initializeMapState() {
   // Create key pool: 5 faction + 2 lith + 6 dome
   const factionKeys = state.factions.slice(0, 5).map(f => ({ type: 'faction', faction: f }));
   const lithKeys = [{ type: 'lith' }, { type: 'lith' }];
-  const domeKeys = Array(6).fill(null).map(() => ({ type: 'dome' }));
+  const domeKeys = Array(6).fill(null).map((_, i) => ({ type: 'dome', number: i + 1 }));
   
   const allKeys = shuffleArray([...factionKeys, ...lithKeys, ...domeKeys]);
   
@@ -324,7 +324,7 @@ function renderMapLegend() {
     } else if (data.type === 'lith') {
       label = 'Lith';
     } else {
-      label = 'Dome';
+      label = `Dome ${data.number}`;
     }
     return `<div class="legend-item"><span class="legend-key">${num}:</span> ${label}</div>`;
   }).join('');
