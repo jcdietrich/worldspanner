@@ -288,9 +288,23 @@ function setFaction(slotIndex, factionName) {
 
 // Render the UI
 function render() {
-  renderScoreboard();
-  renderHeader();
-  renderGrid();
+  // Update body class for view switching
+  document.body.classList.toggle('map-active', state.currentView === 'map');
+  document.body.dataset.factionCount = state.factionCount;
+  
+  if (state.currentView === 'map') {
+    renderMapView();
+  } else {
+    renderScoreboard();
+    renderHeader();
+    renderGrid();
+  }
+}
+
+function renderMapView() {
+  const mapView = document.getElementById('map-view');
+  mapView.classList.add('active');
+  renderMapLegend();
 }
 
 function renderHeader() {
