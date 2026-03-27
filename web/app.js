@@ -39,7 +39,9 @@ const DEFAULT_STATE = {
   round: 1,
   endRound: 10,
   hideUnderpitIcons: false,
-  hideFactionLogos: false
+  hideFactionLogos: false,
+  currentView: 'scoreboard',
+  mapState: null
 };
 
 // Current state
