@@ -205,6 +205,57 @@ function closeMapView() {
   setCurrentView('scoreboard');
 }
 
+// Fisher-Yates shuffle
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Initialize map state with random assignments
+function initializeMapState() {
+  // Pick 3 random platters from 1-10
+  const allPlatters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const shuffledPlatters = shuffleArray(allPlatters);
+  const selectedPlatters = shuffledPlatters.slice(0, 3);
+  
+  // Random rotation for each platter (0-5)
+  const platterRotations = selectedPlatters.map(() => Math.floor(Math.random() * 6));
+  
+  // Create key pool: 5 faction + 2 lith + 6 dome
+  const factionKeys = state.factions.slice(0, 5).map(f => ({ type: 'faction', faction: f }));
+  const lithKeys = [{ type: 'lith' }, { type: 'lith' }];
+  const domeKeys = Array(6).fill(null).map(() => ({ type: 'dome' }));
+  
+  const allKeys = shuffleArray([...factionKeys, ...lithKeys, ...domeKeys]);
+  
+  // Assign to positions 1-13 with random rotations
+  const keyAssignments = {};
+  allKeys.forEach((key, index) => {
+    keyAssignments[index + 1] = {
+      ...key,
+      rotation: Math.floor(Math.random() * 6)
+    };
+  });
+  
+  state.mapState = {
+    selectedPlatters,
+    platterRotations,
+    keyAssignments
+  };
+  
+  saveState();
+}
+
+// Shuffle map (re-randomize everything)
+function shuffleMap() {
+  initializeMapState();
+  render();
+}
+
 // Adjust tug-of-war score (factions + Lith's Favour)
 function adjustScore(slotIndex, delta) {
   const maxTowIndex = state.factionCount; // factions (0 to factionCount-1) + Lith (factionCount)
