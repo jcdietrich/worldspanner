@@ -645,6 +645,26 @@ body.map-active .map-view {
   display: flex;
 }
 
+/* Setting button */
+.setting-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background: var(--btn-white);
+  color: var(--text-black);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#random-map-row {
+  display: none;
+}
+
+body[data-faction-count="5"] #random-map-row {
+  display: block;
+}
+
 /* Responsive */
 @media (min-width: 480px) {
   .app {
