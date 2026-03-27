@@ -292,19 +292,16 @@ function render() {
   document.body.classList.toggle('map-active', state.currentView === 'map');
   document.body.dataset.factionCount = state.factionCount;
   
+  const mapView = document.getElementById('map-view');
   if (state.currentView === 'map') {
-    renderMapView();
+    mapView.classList.add('active');
+    renderMapLegend();
   } else {
+    mapView.classList.remove('active');
     renderScoreboard();
     renderHeader();
     renderGrid();
   }
-}
-
-function renderMapView() {
-  const mapView = document.getElementById('map-view');
-  mapView.classList.add('active');
-  renderMapLegend();
 }
 
 function renderMapLegend() {
