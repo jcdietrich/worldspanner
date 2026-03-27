@@ -731,6 +731,16 @@ function init() {
   
   document.getElementById('close-settings-btn').addEventListener('click', closeSettingsModal);
   
+  // Map view buttons
+  document.getElementById('random-map-btn').addEventListener('click', () => {
+    closeSettingsModal();
+    openMapView();
+  });
+  
+  document.getElementById('map-back-btn').addEventListener('click', closeMapView);
+  
+  document.getElementById('map-shuffle-btn').addEventListener('click', shuffleMap);
+  
   // Faction modal
   document.getElementById('faction-list').addEventListener('click', (e) => {
     const option = e.target.closest('.faction-option');
