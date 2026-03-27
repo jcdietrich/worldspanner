@@ -307,6 +307,43 @@ function renderMapView() {
   renderMapLegend();
 }
 
+function renderMapLegend() {
+  const legendEl = document.getElementById('map-legend');
+  if (!state.mapState) return;
+  
+  const { selectedPlatters, platterRotations, keyAssignments } = state.mapState;
+  
+  // Platter labels
+  const platterLabels = ['A', 'B', 'C'];
+  const platterItems = selectedPlatters.map((p, i) => 
+    `<div class="legend-item"><span class="legend-key">${platterLabels[i]}:</span> Platter ${p}</div>`
+  ).join('');
+  
+  // Key items
+  const keyItems = Object.entries(keyAssignments).map(([num, data]) => {
+    let label;
+    if (data.type === 'faction') {
+      label = data.faction;
+    } else if (data.type === 'lith') {
+      label = 'Lith';
+    } else {
+      label = 'Dome';
+    }
+    return `<div class="legend-item"><span class="legend-key">${num}:</span> ${label}</div>`;
+  }).join('');
+  
+  legendEl.innerHTML = `
+    <div class="legend-section">
+      <h3>Platters</h3>
+      <div class="legend-grid">${platterItems}</div>
+    </div>
+    <div class="legend-section">
+      <h3>Keys</h3>
+      <div class="legend-grid">${keyItems}</div>
+    </div>
+  `;
+}
+
 function renderHeader() {
   const phaseNameEl = document.getElementById('phase-name');
   const roundDisplayEl = document.getElementById('round-display');
