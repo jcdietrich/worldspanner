@@ -22,6 +22,7 @@ SKYHAWKS_B64=$(base64 < skyhawks.svg | tr -d '\n')
 PSICLONES_B64=$(base64 < psiclones.svg | tr -d '\n')
 MELEE_B64=$(base64 < melee.svg | tr -d '\n')
 LITH_B64=$(base64 < lith.svg | tr -d '\n')
+MAP_TRI_B64=$(base64 < map-tri.svg | tr -d '\n')
 
 # Optimize and base64 encode PNGs
 if [ "$HAS_PNGQUANT" = "1" ]; then
@@ -154,6 +155,9 @@ $CSS
           <label for="hide-faction-logos">Hide Faction Logos:</label>
           <input type="checkbox" id="hide-faction-logos">
         </div>
+        <div class="setting-row" id="random-map-row">
+          <button id="random-map-btn" class="setting-btn">Random Map</button>
+        </div>
         <div class="modal-buttons">
           <button id="new-game-btn">New Game</button>
           <button id="close-settings-btn">Close</button>
@@ -167,6 +171,19 @@ $CSS
         <div class="faction-list" id="faction-list"></div>
         <button id="close-faction-btn">Cancel</button>
       </div>
+    </div>
+
+    <div class="map-view" id="map-view">
+      <div class="map-header">
+        <button class="map-back-btn" id="map-back-btn">← Back</button>
+        <h2>Random Map</h2>
+        <button class="map-shuffle-btn" id="map-shuffle-btn">Shuffle</button>
+      </div>
+      <div class="map-container" id="map-container">
+        <img class="map-svg" id="map-svg" src="data:image/svg+xml;base64,$MAP_TRI_B64" alt="Map">
+        <div class="map-markers" id="map-markers"></div>
+      </div>
+      <div class="map-legend" id="map-legend"></div>
     </div>
   </div>
 
