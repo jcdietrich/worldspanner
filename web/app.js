@@ -304,34 +304,82 @@ function render() {
   }
 }
 
-// Approximate positions of A, B, C circles as percentages of map dimensions
-const PLATTER_POSITIONS = {
-  A: { x: 50, y: 18 },   // Top center
-  B: { x: 27, y: 72 },   // Bottom left
-  C: { x: 73, y: 72 }    // Bottom right
+// Circle IDs in the SVG for platters A, B, C
+const PLATTER_CIRCLE_IDS = {
+  A: 'path1316',    // Circle A
+  B: 'circle1329',  // Circle B  
+  C: 'circle1330'   // Circle C
 };
 
+// Load SVG inline and add markers
+async function loadMapSvg() {
+  const wrapper = document.getElementById('map-svg-wrapper');
+  try {
+    const response = await fetch('map-tri.svg');
+    const svgText = await response.text();
+    wrapper.innerHTML = svgText;
+  } catch (e) {
+    // For standalone, SVG may already be embedded
+    console.log('SVG fetch failed, may be embedded');
+  }
+}
+
 function renderMapMarkers() {
-  const markersEl = document.getElementById('map-markers');
   if (!state.mapState) return;
   
   const { platterRotations } = state.mapState;
   const labels = ['A', 'B', 'C'];
+  const svgEl = document.querySelector('#map-svg-wrapper svg');
+  if (!svgEl) return;
   
-  // Each rotation step is 60 degrees
-  const markers = platterRotations.map((rotation, i) => {
-    const pos = PLATTER_POSITIONS[labels[i]];
-    const angle = rotation * 60;
-    return `
-      <div class="platter-marker" style="left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%) rotate(${angle}deg);">
-        <svg viewBox="0 0 20 20" width="24" height="24">
-          <polygon points="10,2 4,18 10,14 16,18" fill="#d40000" stroke="#fff" stroke-width="1"/>
-        </svg>
-      </div>
-    `;
-  }).join('');
+  // Remove existing markers
+  svgEl.querySelectorAll('.platter-arrow').forEach(el => el.remove());
   
-  markersEl.innerHTML = markers;
+  // Add arrow markers at each platter circle
+  labels.forEach((label, i) => {
+    const circleId = PLATTER_CIRCLE_IDS[label];
+    const circle = svgEl.getElementById(circleId);
+    if (!circle) return;
+    
+    // Get the circle's screen bounding rect
+    const circleRect = circle.getBoundingClientRect();
+    const svgRect = svgEl.getBoundingClientRect();
+    
+    // Get viewBox dimensions
+    const viewBox = svgEl.viewBox.baseVal;
+    const scaleX = viewBox.width / svgRect.width;
+    const scaleY = viewBox.height / svgRect.height;
+    
+    // Circle center in screen coords relative to SVG
+    const screenCenterX = circleRect.left + circleRect.width / 2 - svgRect.left;
+    const screenCenterY = circleRect.top + circleRect.height / 2 - svgRect.top;
+    
+    // Convert to viewBox coords
+    const cx = screenCenterX * scaleX + viewBox.x;
+    const cy = screenCenterY * scaleY + viewBox.y;
+    const r = (circleRect.width / 2) * scaleX;
+    
+    // Each rotation step is 60 degrees
+    const angle = platterRotations[i] * 60;
+    
+    // Arrow points outward from circle edge
+    const offset = r + 1.5;
+    
+    const angleRad = (angle - 90) * Math.PI / 180;
+    const arrowX = cx + Math.cos(angleRad) * offset;
+    const arrowY = cy + Math.sin(angleRad) * offset;
+    
+    const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    polygon.classList.add('platter-arrow');
+    polygon.setAttribute('points', '0,-2.5 -1.2,1.5 0,0.5 1.2,1.5');
+    polygon.setAttribute('fill', '#d40000');
+    polygon.setAttribute('stroke', '#fff');
+    polygon.setAttribute('stroke-width', '0.3');
+    polygon.setAttribute('transform', `translate(${arrowX}, ${arrowY}) rotate(${angle})`);
+    
+    // Add to SVG root so it's in root coordinate space
+    svgEl.appendChild(polygon);
+  });
 }
 
 function renderMapLegend() {
@@ -872,4 +920,7 @@ function updateSelection() {
 document.addEventListener('keydown', handleKeydown);
 
 // Start app
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  loadMapSvg();
+  init();
+});

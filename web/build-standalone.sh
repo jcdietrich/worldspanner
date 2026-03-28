@@ -180,8 +180,9 @@ $CSS
         <button class="map-shuffle-btn" id="map-shuffle-btn">Shuffle</button>
       </div>
       <div class="map-container" id="map-container">
-        <img class="map-svg" id="map-svg" src="data:image/svg+xml;base64,$MAP_TRI_B64" alt="Map">
-        <div class="map-markers" id="map-markers"></div>
+        <div class="map-svg-wrapper" id="map-svg-wrapper">
+$(cat map-tri.svg | grep -v '<?xml' | grep -v '<!--')
+        </div>
       </div>
       <div class="map-legend" id="map-legend"></div>
     </div>

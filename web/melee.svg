@@ -1,46 +1,133 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 62" width="62" height="62">
-  <defs>
-    <clipPath id="left-half">
-      <rect x="0" y="0" width="31" height="62"/>
-    </clipPath>
-    <clipPath id="right-half">
-      <rect x="31" y="0" width="31" height="62"/>
-    </clipPath>
-  </defs>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 48.96489 48.969383"
+   width="48.96489"
+   height="48.969383"
+   version="1.1"
+   id="svg18"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs2"><style
+       type="text/css"
+       id="style1">
+   <![CDATA[
+    .fil2 {fill:#FEFEFE}
+    .fil0 {fill:#FEFEFE}
+    .fil1 {fill:black}
+   ]]>
+  </style><style
+       type="text/css"
+       id="style1-9">
+   <![CDATA[
+    .fil2 {fill:#FEFEFE}
+    .fil0 {fill:#FEFEFE}
+    .fil1 {fill:black}
+   ]]>
+  </style><style
+       type="text/css"
+       id="style1-7">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:0.85;stroke-miterlimit:2.61313}
+    .fil0 {fill:#FEFEFE}
+    .fil1 {fill:black}
+   ]]>
+  </style></defs><!-- Left half: Skyhawks (white background, black icon) --><!-- Right half: Psiclones (black background, white icon) --><!-- Vertical divider line --><ellipse
+     class="fil1"
+     cx="24.318172"
+     cy="24.29262"
+     id="circle2-9"
+     style="clip-rule:evenodd;display:none;fill-rule:evenodd;stroke-width:1.13166;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+     rx="30.66427"
+     ry="30.807928" /><circle
+     class="fil0"
+     cx="24.482445"
+     cy="24.484694"
+     id="circle1"
+     style="clip-rule:evenodd;display:none;fill-rule:evenodd;stroke-width:0.836383;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+     r="23.995819" /><ellipse
+     class="fil0 str0"
+     cx="24.482445"
+     cy="24.484694"
+     id="circle1-0"
+     style="clip-rule:evenodd;display:inline;fill:#ffffff;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+     rx="24.002609"
+     ry="24.002611" /><path
+     id="circle2-0"
+     style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.836383;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+     class="fil1"
+     d="M 23.982444,1.7737555 A 22.716152,22.716152 0 0 0 1.7656476,24.484693 22.716152,22.716152 0 0 0 23.982444,47.195631 v -7.916016 c -0.02538,1.02e-4 -0.05077,0 -0.07617,0 -9.141663,0 -16.5957034,-6.622865 -16.5957034,-14.744141 0,-8.121275 7.4540404,-14.7460935 16.5957034,-14.7460935 0.0254,0 0.05079,-1.022e-4 0.07617,0 z m -0.07617,9.6718755 c -8.112912,0 -14.7304692,5.880225 -14.7304692,13.089843 0,7.209618 6.6175572,13.087891 14.7304692,13.087891 0.02541,0 0.0508,1.15e-4 0.07617,0 v -2.964844 c -0.746977,0.134804 -1.519692,0.205078 -2.310547,0.205078 -6.389963,0 -11.609375,-4.63291 -11.609375,-10.320312 0,-5.687402 5.211048,-10.320313 11.609375,-10.320313 0.790661,0 1.5634,0.06999 2.310547,0.205078 v -2.982421 c -0.02538,-1.16e-4 -0.05077,0 -0.07617,0 z m -2.234375,3.93164 c -5.679039,0 -10.3125,4.114265 -10.3125,9.166016 0,5.043387 4.633461,9.166015 10.3125,9.166015 0.793881,0 1.567331,-0.0803 2.310546,-0.232422 v -3.029296 c -3.353823,-0.313019 -5.990234,-2.844367 -5.990234,-5.91211 0,-3.060346 2.629826,-5.600494 5.990234,-5.914062 V 15.609693 C 23.239229,15.457314 22.46578,15.377271 21.671899,15.377271 Z m 2.310546,3.917969 c -2.9432,0.3104 -5.246093,2.548467 -5.246093,5.248047 0,2.700057 2.29651,4.938275 5.246093,5.248046 z m -2.384765,3.082031 a 2.0993204,2.2247779 0 0 1 2.097656,2.22461 2.0993204,2.2247779 0 0 1 -2.097656,2.224609 2.0993204,2.2247779 0 0 1 -2.09961,-2.224609 2.0993204,2.2247779 0 0 1 2.09961,-2.22461 z" /><g
+     id="Layer_x0020_1"
+     transform="matrix(1.1290232,0,0,1.1343125,19.584842,16.200703)"
+     style="clip-rule:evenodd;display:inline;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
   
-  <!-- Left half: Skyhawks (white background, black icon) -->
-  <g clip-path="url(#left-half)">
-    <circle cx="31" cy="31" r="30" fill="#FEFEFE" stroke="#000" stroke-width="1"/>
-    <g fill="#000">
-      <polygon points="48.58,40.37 42.66,40.29 36.73,40.22 33.7,35.12 30.67,30.03 36.59,30.1 42.52,30.18 45.55,35.27"/>
-      <polygon points="14.34,21.02 19.03,29.79 25.01,37.42 30.35,30.03 33.88,22.06 23.84,20.67"/>
-      <path d="M54.41 18.48l-14.98 -0.36 -5.25 4.37c0,0 20.04,-4.01 20.23,-4z"/>
-      <path d="M37.82 14.48l-11.88 1.62 -3.59 4.12c0,0 15.32,-5.72 15.46,-5.74z"/>
-      <path d="M45.6 16.4l-13.48 0.3 -4.54 4.14c0,0 17.85,-4.44 18.02,-4.44z"/>
-      <path d="M31.15 13.13l-10.07 2.94 -2.57 4.03c0,0 12.51,-6.93 12.64,-6.96z"/>
-      <path d="M25.24 11.97l-7.72 4.6 -1.27 3.89c0,0 8.9,-8.44 9,-8.49z"/>
-      <path d="M19.58 11.4l-4.37 6.09 0.33 3.4c0,0 3.98,-9.41 4.04,-9.48z"/>
-      <path d="M32.16 57.02l-7.8 -12.79 1.16 -6.73c0,0 6.55,19.36 6.65,19.52z"/>
-      <path d="M20.4 44.65l-4.53 -11.09 1.77 -5.17c0,0 2.7,16.12 2.76,16.26z"/>
-      <path d="M25.95 50.43l-6.48 -11.82 1.32 -6c0,0 5.08,17.68 5.16,17.82z"/>
-      <path d="M15.89 39.55l-2.49 -10.19 2.2 -4.24c0,0 0.26,14.3 0.29,14.43z"/>
-      <path d="M11.94 35.01l0.12 -8.99 2.74 -3.05c0,0 -2.86,11.92 -2.86,12.04z"/>
-      <path d="M8.61 30.4l3.09 -6.83 3.11 -1.42c0,0 -6.16,8.16 -6.19,8.24z"/>
+ <g
+   id="g5"
+   style="clip-rule:evenodd;display:none;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   transform="translate(-24.497589,-21.556237)">
+    <g
+   id="g4">
+     <path
+   class="fil2"
+   d="m 28,13.1 c -9.7,0 -17.61,7.03 -17.61,15.65 0,8.62 7.91,15.65 17.61,15.65 9.7,0 17.61,-7.03 17.61,-15.65 C 45.61,20.13 37.7,13.1 28,13.1 Z m 0,-1.98 c -10.93,0 -19.84,7.92 -19.84,17.63 0,9.71 8.91,17.63 19.84,17.63 10.93,0 19.84,-7.92 19.84,-17.63 0,-9.71 -8.91,-17.63 -19.84,-17.63 z"
+   id="path2" />
+     <path
+   class="fil2"
+   d="M 25.33,17.8 C 18.54,17.8 13,22.72 13,28.76 c 0,6.03 5.54,10.96 12.33,10.96 6.79,0 12.33,-4.92 12.33,-10.96 0,-6.03 -5.54,-10.96 -12.33,-10.96 z m 0,-1.38 c -7.65,0 -13.88,5.54 -13.88,12.34 0,6.8 6.24,12.34 13.88,12.34 7.65,0 13.88,-5.54 13.88,-12.34 0,-6.8 -6.24,-12.34 -13.88,-12.34 z"
+   id="path3-3" />
+     <path
+   class="fil2"
+   d="m 28.93,22.44 c -3.91,0 -7.11,2.84 -7.11,6.32 0,3.48 3.19,6.32 7.11,6.32 3.91,0 7.11,-2.84 7.11,-6.32 0,-3.48 -3.19,-6.32 -7.11,-6.32 z m 0,-0.8 c -4.41,0 -8,3.2 -8,7.11 0,3.92 3.6,7.11 8,7.11 4.41,0 8,-3.2 8,-7.11 0,-3.92 -3.6,-7.11 -8,-7.11 z"
+   id="path4-8" />
     </g>
-  </g>
-  
-  <!-- Right half: Psiclones (black background, white icon) -->
-  <g clip-path="url(#right-half)">
-    <circle cx="31" cy="31" r="30" fill="#000"/>
-    <g fill="#FEFEFE">
-      <path d="M31 13.1c-9.7,0 -17.61,7.03 -17.61,15.65 0,8.62 7.91,15.65 17.61,15.65 9.7,0 17.61,-7.03 17.61,-15.65 0,-8.62 -7.91,-15.65 -17.61,-15.65zm0 -1.98c-10.93,0 -19.84,7.92 -19.84,17.63 0,9.71 8.91,17.63 19.84,17.63 10.93,0 19.84,-7.92 19.84,-17.63 0,-9.71 -8.91,-17.63 -19.84,-17.63z"/>
-      <path d="M28.33 17.8c-6.79,0 -12.33,4.92 -12.33,10.96 0,6.03 5.54,10.96 12.33,10.96 6.79,0 12.33,-4.92 12.33,-10.96 0,-6.03 -5.54,-10.96 -12.33,-10.96zm0 -1.38c-7.65,0 -13.88,5.54 -13.88,12.34 0,6.8 6.24,12.34 13.88,12.34 7.65,0 13.88,-5.54 13.88,-12.34 0,-6.8 -6.24,-12.34 -13.88,-12.34z"/>
-      <path d="M31.93 22.44c-3.91,0 -7.11,2.84 -7.11,6.32 0,3.48 3.19,6.32 7.11,6.32 3.91,0 7.11,-2.84 7.11,-6.32 0,-3.48 -3.19,-6.32 -7.11,-6.32zm0 -0.8c-4.41,0 -8,3.2 -8,7.11 0,3.92 3.6,7.11 8,7.11 4.41,0 8,-3.2 8,-7.11 0,-3.92 -3.6,-7.11 -8,-7.11z"/>
-      <ellipse cx="28.24" cy="28.83" rx="2.51" ry="2.66"/>
-    </g>
-  </g>
-  
-  <!-- Vertical divider line -->
-  <line x1="31" y1="1" x2="31" y2="61" stroke="#666" stroke-width="1"/>
-</svg>
+    <ellipse
+   class="fil2"
+   cx="25.24"
+   cy="28.83"
+   rx="2.51"
+   ry="2.6600001"
+   id="ellipse4" />
+   </g><polygon
+   class="fil1"
+   points="42.52,30.18 45.55,35.27 48.58,40.37 42.66,40.29 36.73,40.22 33.7,35.12 30.67,30.03 36.59,30.1 "
+   id="polygon1"
+   transform="matrix(0.69749427,0,0,0.69424186,-17.214662,-14.14898)"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" /><path
+   id="polygon2-2"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   class="fil1"
+   d="m 30.059212,21.529808 v 8.901434 l 0.290184,-0.401792 3.531803,-7.968879 z"
+   transform="matrix(0.69749427,0,0,0.69424186,-17.214662,-14.14898)" /><path
+   class="fil1"
+   d="M 20.736001,-1.3193904 10.287537,-1.5693175 6.6256921,1.4645194 c 0,0 13.9777849,-2.7839098 14.1103089,-2.7769674 z"
+   id="path2-3"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.695866;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" /><path
+   id="path3-9"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.695866;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   class="fil1"
+   d="M 9.1505611,-4.0938845 3.7514664,-3.360373 v 1.2535126 c 2.6165892,-0.9696498 5.2381144,-1.9378803 5.3990947,-1.9870241 z" /><path
+   id="path4-9"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.695866;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   class="fil1"
+   d="M 14.591174,-2.7628883 5.1890338,-2.5545435 3.7514664,-1.251097 v 1.14159179 C 7.1760881,-0.95613922 14.500362,-2.7628883 14.591174,-2.7628883 Z" /><path
+   id="path5-7"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.695866;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   class="fil1"
+   d="m 4.5126332,-5.034019 -0.7611668,0.2221197 v 0.1911263 c 0.4591418,-0.2496661 0.745151,-0.4026798 0.7611668,-0.4063585 z" /><path
+   id="path8-9"
+   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-width:0.695866;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   class="fil1"
+   d="m 3.7514664,21.176103 v 1.868216 l 1.4652462,2.39166 h 0.00692 C 5.197758,25.394774 4.5526437,23.519305 3.7514664,21.176103 Z" /><path
+   id="path19"
+   style="clip-rule:evenodd;display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-linecap:round;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   d="M 3.7514664,-0.77930795 V 9.8548868 L 7.2043959,8.0021676 Z" /></g><line
+     x1="23.982445"
+     y1="-3.189788e-08"
+     x2="23.982445"
+     y2="48.969383"
+     stroke="#666666"
+     stroke-width="0.903414"
+     id="line18"
+     style="display:inline" /></svg>
