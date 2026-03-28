@@ -304,9 +304,41 @@ function render() {
   }
 }
 
+// Approximate positions of A, B, C circles as percentages of map dimensions
+const PLATTER_POSITIONS = {
+  A: { x: 50, y: 18 },   // Top center
+  B: { x: 27, y: 72 },   // Bottom left
+  C: { x: 73, y: 72 }    // Bottom right
+};
+
+function renderMapMarkers() {
+  const markersEl = document.getElementById('map-markers');
+  if (!state.mapState) return;
+  
+  const { platterRotations } = state.mapState;
+  const labels = ['A', 'B', 'C'];
+  
+  // Each rotation step is 60 degrees
+  const markers = platterRotations.map((rotation, i) => {
+    const pos = PLATTER_POSITIONS[labels[i]];
+    const angle = rotation * 60;
+    return `
+      <div class="platter-marker" style="left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%) rotate(${angle}deg);">
+        <svg viewBox="0 0 20 20" width="24" height="24">
+          <polygon points="10,2 4,18 10,14 16,18" fill="#d40000" stroke="#fff" stroke-width="1"/>
+        </svg>
+      </div>
+    `;
+  }).join('');
+  
+  markersEl.innerHTML = markers;
+}
+
 function renderMapLegend() {
   const legendEl = document.getElementById('map-legend');
   if (!state.mapState) return;
+  
+  renderMapMarkers();
   
   const { selectedPlatters, platterRotations, keyAssignments } = state.mapState;
   

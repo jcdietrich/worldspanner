@@ -596,6 +596,11 @@ html, body {
   pointer-events: none;
 }
 
+.platter-marker {
+  position: absolute;
+  pointer-events: none;
+}
+
 .map-legend {
   padding: 8px 12px;
   background: var(--bg-grey);
