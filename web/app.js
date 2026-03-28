@@ -345,13 +345,16 @@ const KEY_CIRCLE_IDS = {
 // Load SVG inline and add markers
 async function loadMapSvg() {
   const wrapper = document.getElementById('map-svg-wrapper');
+  // If SVG is already embedded (standalone build), don't fetch
+  if (wrapper.querySelector('svg')) {
+    return;
+  }
   try {
     const response = await fetch('map-tri.svg');
     const svgText = await response.text();
     wrapper.innerHTML = svgText;
   } catch (e) {
-    // For standalone, SVG may already be embedded
-    console.log('SVG fetch failed, may be embedded');
+    console.log('SVG fetch failed');
   }
 }
 
