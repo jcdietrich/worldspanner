@@ -527,9 +527,9 @@ html, body {
 .map-view {
   display: none;
   flex-direction: column;
-  height: 100%;
+  min-height: 100dvh;
   background: var(--bg-dark);
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .map-view.active {
@@ -572,13 +572,12 @@ html, body {
 }
 
 .map-container {
-  flex: 1;
+  flex: 0 0 auto;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px;
-  overflow: hidden;
 }
 
 .map-svg-wrapper {
@@ -609,12 +608,11 @@ html, body {
 }
 
 .map-legend {
+  flex: 0 0 auto;
   padding: 8px 12px;
   background: var(--bg-grey);
   color: var(--text-white);
   font-size: 0.75rem;
-  max-height: 30vh;
-  overflow-y: auto;
 }
 
 .legend-section {

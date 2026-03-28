@@ -232,12 +232,12 @@ function initializeMapState() {
   
   const allKeys = shuffleArray([...factionKeys, ...lithKeys, ...domeKeys]);
   
-  // Assign to positions 1-13 with random rotations
+  // Assign to positions 1-13 with random rotations (0-2 for 3 directions, 120° apart)
   const keyAssignments = {};
   allKeys.forEach((key, index) => {
     keyAssignments[index + 1] = {
       ...key,
-      rotation: Math.floor(Math.random() * 6)
+      rotation: Math.floor(Math.random() * 3)
     };
   });
   
@@ -311,6 +311,23 @@ const PLATTER_CIRCLE_IDS = {
   C: 'circle1330'   // Circle C
 };
 
+// Circle IDs for numbered key positions 1-13
+const KEY_CIRCLE_IDS = {
+  1: 'circle1317',
+  2: 'circle1318',
+  3: 'circle1319',
+  4: 'circle1320',
+  5: 'circle1321',
+  6: 'circle1322',
+  7: 'circle1323',
+  8: 'circle1324',
+  9: 'circle1325',
+  10: 'circle1326',
+  11: 'circle1327',
+  12: 'circle1316',
+  13: 'circle1328'
+};
+
 // Load SVG inline and add markers
 async function loadMapSvg() {
   const wrapper = document.getElementById('map-svg-wrapper');
@@ -334,21 +351,17 @@ function renderMapMarkers() {
   
   // Remove existing markers
   svgEl.querySelectorAll('.platter-arrow').forEach(el => el.remove());
+  svgEl.querySelectorAll('.key-arrow').forEach(el => el.remove());
   
-  // Add arrow markers at each platter circle
-  labels.forEach((label, i) => {
-    const circleId = PLATTER_CIRCLE_IDS[label];
-    const circle = svgEl.getElementById(circleId);
-    if (!circle) return;
-    
-    // Get the circle's screen bounding rect
+  // Get viewBox dimensions once
+  const svgRect = svgEl.getBoundingClientRect();
+  const viewBox = svgEl.viewBox.baseVal;
+  const scaleX = viewBox.width / svgRect.width;
+  const scaleY = viewBox.height / svgRect.height;
+  
+  // Helper to create arrow at circle position
+  function createArrow(circle, angle, className) {
     const circleRect = circle.getBoundingClientRect();
-    const svgRect = svgEl.getBoundingClientRect();
-    
-    // Get viewBox dimensions
-    const viewBox = svgEl.viewBox.baseVal;
-    const scaleX = viewBox.width / svgRect.width;
-    const scaleY = viewBox.height / svgRect.height;
     
     // Circle center in screen coords relative to SVG
     const screenCenterX = circleRect.left + circleRect.width / 2 - svgRect.left;
@@ -359,9 +372,6 @@ function renderMapMarkers() {
     const cy = screenCenterY * scaleY + viewBox.y;
     const r = (circleRect.width / 2) * scaleX;
     
-    // Each rotation step is 60 degrees
-    const angle = platterRotations[i] * 60;
-    
     // Arrow points outward from circle edge
     const offset = r + 1.5;
     
@@ -370,16 +380,46 @@ function renderMapMarkers() {
     const arrowY = cy + Math.sin(angleRad) * offset;
     
     const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-    polygon.classList.add('platter-arrow');
+    polygon.classList.add(className);
     polygon.setAttribute('points', '0,-2.5 -1.2,1.5 0,0.5 1.2,1.5');
     polygon.setAttribute('fill', '#d40000');
     polygon.setAttribute('stroke', '#fff');
     polygon.setAttribute('stroke-width', '0.3');
     polygon.setAttribute('transform', `translate(${arrowX}, ${arrowY}) rotate(${angle})`);
     
-    // Add to SVG root so it's in root coordinate space
     svgEl.appendChild(polygon);
+  }
+  
+  // Add arrow markers at each platter circle
+  labels.forEach((label, i) => {
+    const circleId = PLATTER_CIRCLE_IDS[label];
+    const circle = svgEl.getElementById(circleId);
+    if (!circle) return;
+    
+    // Each rotation step is 60 degrees, +10 degree offset for map orientation
+    const angle = platterRotations[i] * 60 + 10;
+    createArrow(circle, angle, 'platter-arrow');
   });
+  
+  // Add arrow markers at each key circle (1-13)
+  // Base orientation: even numbers and 13 point up (0°), odd numbers point down (180°)
+  // Then add random rotation (0, 1, or 2) * 120° for 3 possible directions
+  const { keyAssignments } = state.mapState;
+  for (let keyNum = 1; keyNum <= 13; keyNum++) {
+    const circleId = KEY_CIRCLE_IDS[keyNum];
+    const circle = svgEl.getElementById(circleId);
+    if (!circle) continue;
+    
+    // Base angle: even numbers and 13 point up, other odd numbers point down
+    const pointsUp = (keyNum % 2 === 0) || (keyNum === 13);
+    const baseAngle = pointsUp ? 0 : 180;
+    
+    // Add rotation from state (0, 1, or 2) * 120°
+    const keyRotation = keyAssignments[keyNum]?.rotation || 0;
+    const angle = baseAngle + (keyRotation * 120);
+    
+    createArrow(circle, angle, 'key-arrow');
+  }
 }
 
 function renderMapLegend() {
