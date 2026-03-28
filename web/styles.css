@@ -527,9 +527,7 @@ html, body {
 .map-view {
   display: none;
   flex-direction: column;
-  min-height: 100dvh;
   background: var(--bg-dark);
-  overflow-y: auto;
 }
 
 .map-view.active {
@@ -652,6 +650,11 @@ body.map-active .header {
   display: none;
 }
 
+body.map-active .app {
+  height: auto;
+  max-height: none;
+}
+
 body.map-active .map-view {
   display: flex;
 }
@@ -668,11 +671,11 @@ body.map-active .map-view {
   cursor: pointer;
 }
 
-#random-map-row {
+#view-map-row {
   display: none;
 }
 
-body[data-faction-count="5"] #random-map-row {
+body[data-faction-count="5"] #view-map-row {
   display: block;
 }
 

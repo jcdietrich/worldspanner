@@ -26,6 +26,20 @@ const FACTIONS = [
   { name: 'Commoners', location: 'Green Vale', logo: 'commoners.png' }
 ];
 
+const PLATTER_NAMES = [
+  '', // 0 - unused
+  'Slackwater Farm',
+  'Horselands',
+  'Naiad Pools',
+  'Encroaching Eruption',
+  'Seaside Chateau',
+  'Hell Dust Mines',
+  'Swamp Stronghold',
+  'The Great Tree',
+  'Cascade Ford',
+  'Elemental Temple'
+];
+
 const STORAGE_KEY = 'worldspanner_state';
 const STATE_VERSION = 1;
 
@@ -77,7 +91,7 @@ function saveState() {
 
 // Reset to new game
 function resetGame() {
-  state = { ...DEFAULT_STATE, factions: ['', '', '', '', '', '', '', '', ''], factionCount: state.factionCount, endRound: state.endRound };
+  state = { ...DEFAULT_STATE, factions: ['', '', '', '', '', '', '', '', ''], factionCount: state.factionCount, endRound: state.endRound, mapState: null };
   saveState();
   render();
 }
@@ -433,7 +447,7 @@ function renderMapLegend() {
   // Platter labels
   const platterLabels = ['A', 'B', 'C'];
   const platterItems = selectedPlatters.map((p, i) => 
-    `<div class="legend-item"><span class="legend-key">${platterLabels[i]}:</span> Platter ${p}</div>`
+    `<div class="legend-item"><span class="legend-key">${platterLabels[i]}:</span> ${PLATTER_NAMES[p]}</div>`
   ).join('');
   
   // Key items
@@ -849,7 +863,7 @@ function init() {
   document.getElementById('close-settings-btn').addEventListener('click', closeSettingsModal);
   
   // Map view buttons
-  document.getElementById('random-map-btn').addEventListener('click', () => {
+  document.getElementById('view-map-btn').addEventListener('click', () => {
     closeSettingsModal();
     openMapView();
   });
