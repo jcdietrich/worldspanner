@@ -155,8 +155,8 @@ $CSS
           <label for="hide-faction-logos">Hide Faction Logos:</label>
           <input type="checkbox" id="hide-faction-logos">
         </div>
-        <div class="setting-row" id="random-map-row">
-          <button id="random-map-btn" class="setting-btn">Random Map</button>
+        <div class="setting-row" id="view-map-row">
+          <button id="view-map-btn" class="setting-btn">View Map</button>
         </div>
         <div class="modal-buttons">
           <button id="new-game-btn">New Game</button>
